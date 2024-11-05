@@ -13,8 +13,10 @@
 
 .nav-bar{
     width: 20%;
-    background-color: pink;
     padding-left: 25px;
+    border-color: rgb(85, 66, 36);
+    border-style: solid;
+    border-width: 2px;
 }
 
 .nav-btn-area{
@@ -23,7 +25,7 @@
     justify-content: center;
     gap: 45px;
     width: 75%;
-    background-color: aqua;
+
     padding-bottom: 25px;
 }
 
@@ -32,7 +34,7 @@
     flex-direction: row;
     justify-content: center;
     width: 75%;
-    background-color: aqua;
+
     padding-bottom: 125px;
     padding-top: 25px;
 }
@@ -49,7 +51,7 @@
     width: 100%;
     height: 10%;
     max-height: 75px;
-    background-color: rgb(154, 68, 240);
+
 }
 
 .sign-in-icon{
@@ -61,7 +63,7 @@
     display: flex;
     flex-direction: column;
     min-height: 150px;
-    background-color: burlywood;
+
 }
 
 .notebook-header{
@@ -82,7 +84,7 @@
     flex-direction: column;
     width: 100%;
     height: 80%;
-    background-color: cadetblue;
+
 }
 
 .single-note{
@@ -93,8 +95,10 @@
     border-radius: 15px;
     margin-top: 20px;
     margin-left: 20px;
-    background-color: antiquewhite;
     padding-left: 15px;
+    border-color: rgb(85, 66, 36);
+    border-style: solid;
+    border-width: 2px;
 }
 
 .note-header{
