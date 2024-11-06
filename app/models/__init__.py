@@ -1,4 +1,4 @@
 from .db import db
 from .user import User
-from .notebook import Notebook
+from .modelz import Notebook, Note, Tag, Task, note_tags
 from .db import environment, SCHEMA
