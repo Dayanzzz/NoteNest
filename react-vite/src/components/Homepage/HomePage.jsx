@@ -53,7 +53,7 @@ console.log("notebooks:",notebooks);
             <div className="notebooks-populated-area">
               {notebooks.map((notebook) => (
                 <div key={notebook.id}>
-                  <FaBook />
+                  <h1 className="notebook-icon"><FaBook /></h1>
                   <h2>{notebook.name}</h2>                
                 </div>
               ))}

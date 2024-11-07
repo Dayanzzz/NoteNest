@@ -79,6 +79,18 @@
     font-size: 55px;
 }
 
+.notebooks-populated-area{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.notebook-icon{
+    font-size: 4em;
+}
+
+
+
 .note-area-wrapper{
     display: flex;
     flex-direction: column;
