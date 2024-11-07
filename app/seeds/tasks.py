@@ -2,7 +2,7 @@ from app.models import db, Task, environment, SCHEMA
 from sqlalchemy.sql import text
 from datetime import datetime
 
-# Adds some demo tasks, you can customize or expand these as needed
+
 def seed_tasks():
     task1 = Task(
         name='Complete project report', 
@@ -31,9 +31,7 @@ def seed_tasks():
     db.session.add(task3)
     db.session.commit()
 
-# Uses a raw SQL query to TRUNCATE or DELETE the tasks table
-# TRUNCATE is used in production to clear the table and reset the ID
-# DELETE is used in development with sqlite3 for the same effect
+
 def undo_tasks():
     if environment == "production":
         db.session.execute(f"TRUNCATE table {SCHEMA}.tasks RESTART IDENTITY CASCADE;")

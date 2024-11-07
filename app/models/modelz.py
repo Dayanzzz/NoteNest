@@ -102,29 +102,3 @@ class Task(db.Model):
             'user_id': self.user_id,
             'user': self.user.to_dict()  
         }
-
-# Association table doesn't need a to_dict method by itself, 
-# but we can include it in the related models' to_dict methods
-# as demonstrated in the models above.
-
-# from datetime import datetime
-# from .db import db, environment, SCHEMA  # Import environment and SCHEMA if needed
-
-# class Notebook(db.Model):
-#     __tablename__ = 'notebook'
-
-#     # Optionally, add schema if you're using PostgreSQL or other systems that support schemas
-#     if environment == "production":
-#         __table_args__ = {'schema': SCHEMA}
-
-#     id = db.Column(db.Integer, primary_key=True)
-#     owner_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)  # Foreign key to User
-#     name = db.Column(db.String(80), nullable=False)
-#     created_at = db.Column(db.DateTime, default=datetime.utcnow)
-#     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
-    
-#     owner = db.relationship('User', back_populates='notebooks')  # Relationship with User
-#     notes = db.relationship('Note', back_populates='notebook')  # Relationship with Note
-
-#     def __repr__(self):
-#         return f"<Notebook(id={self.id}, name={self.name})>"
