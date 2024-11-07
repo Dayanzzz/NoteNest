@@ -1,10 +1,10 @@
 from flask import Blueprint, request, jsonify
 from flask_login import login_required, current_user
-from ..models import db, Tag, Note, Notebook
+from app.models import db, Tag, Note, Notebook
 
-bp = Blueprint('tags', __name__, url_prefix='/api/tags')
+tag_routes = Blueprint('tags', __name__)
 
-@bp.route('', methods=['GET'])
+@tag_routes.route('', methods=['GET'])
 @login_required
 def get_tags():
     tags = Tag.query.join(Tag.notes).join(Note.notebook).filter(
@@ -16,7 +16,7 @@ def get_tags():
         'note_count': sum(1 for note in tag.notes if note.notebook.owner_id == current_user.id)
     } for tag in tags])
 
-@bp.route('', methods=['POST'])
+@tag_routes.route('', methods=['POST'])
 @login_required
 def create_tag():
     data = request.get_json()
@@ -43,7 +43,7 @@ def create_tag():
         'note_count': 0
     }), 201
 
-@bp.route('/<int:tag_id>', methods=['DELETE'])
+@tag_routes.route('/<int:tag_id>', methods=['DELETE'])
 @login_required
 def delete_tag(tag_id):
     tag = Tag.query.get_or_404(tag_id)
