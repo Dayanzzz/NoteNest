@@ -1,0 +1,108 @@
+.page-wrapper{
+    display: flex;
+    flex-direction: row;
+    align-self: center;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    max-width: 1200px;
+    height: 100%;
+    min-height: 1200px;
+    background-color: rgb(242, 255, 208);
+}
+
+.nav-bar{
+    width: 20%;
+    padding-left: 25px;
+    border-color: rgb(85, 66, 36);
+    border-style: solid;
+    border-width: 2px;
+}
+
+.nav-btn-area{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 45px;
+    width: 75%;
+
+    padding-bottom: 25px;
+}
+
+.user-name{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 75%;
+
+    padding-bottom: 125px;
+    padding-top: 25px;
+}
+
+.content-wrapper{
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+}
+
+.sign-in-icon-area{
+    display: inline-flex;
+    flex-direction: row-reverse;
+    width: 100%;
+    height: 10%;
+    max-height: 75px;
+
+}
+
+.sign-in-icon{
+    padding-right: 50px;
+    padding-top: 15px;
+}
+
+.note-books-area{
+    display: flex;
+    flex-direction: column;
+    min-height: 150px;
+
+}
+
+.notebook-header{
+    font-size: 35px;
+    padding-left: 25px;
+    padding-top: 5px;
+}
+
+.note-book-icons{
+    display: flex;
+    gap: 25px;
+    padding-left: 25px;
+    font-size: 55px;
+}
+
+.note-area-wrapper{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 80%;
+
+}
+
+.single-note{
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    min-height: 85px;
+    border-radius: 15px;
+    margin-top: 20px;
+    margin-left: 20px;
+    padding-left: 15px;
+    border-color: rgb(85, 66, 36);
+    border-style: solid;
+    border-width: 2px;
+}
+
+.note-header{
+    margin: 0px;
+    padding-top: 25px;
+    line-height: 18px;
+}
