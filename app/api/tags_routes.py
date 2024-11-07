@@ -1,8 +1,7 @@
-# app/tag_routes.py
-
+# # app/tag_routes.py
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
-from app.models import db, Tag, Note, Notebook  # This is the correct syntax (app.models)
+from app.models import db, Tag, Note, Notebook  # Correct import syntax
 
 tag_routes = Blueprint('tags', __name__)
 
@@ -10,14 +9,16 @@ tag_routes = Blueprint('tags', __name__)
 @tag_routes.route('/', methods=['GET'])
 @login_required
 def get_tags():
+    # Get all tags associated with the current user's notebooks
     tags = Tag.query.join(Tag.notes).join(Note.notebook).filter(
         Notebook.owner_id == current_user.id
     ).distinct().all()
-    
+
+    # Prepare the response data with note counts for each tag
     return jsonify([{
         'id': tag.id,
         'name': tag.name,
-        'note_count': sum(1 for note in tag.notes if note.notebook.owner_id == current_user.id)
+        'note_count': len([note for note in tag.notes if note.notebook.owner_id == current_user.id])
     } for tag in tags])
 
 # POST /tags - Create a new tag
@@ -30,19 +31,22 @@ def create_tag():
     if not data or 'name' not in data:
         return jsonify({'error': 'Tag name is required'}), 400
 
-    # Check if tag already exists for this user
+    # Check if the tag already exists for the current user
     existing_tag = Tag.query.filter_by(name=data['name']).first()
     if existing_tag:
-        return jsonify({
-            'id': existing_tag.id,
-            'name': existing_tag.name,
-            'note_count': len([note for note in existing_tag.notes if note.notebook.owner_id == current_user.id])
-        })
-
-    # Create and save a new tag
+        # Ensure the existing tag belongs to the current user
+        if any(note.notebook.owner_id == current_user.id for note in existing_tag.notes):
+            return jsonify({
+                'id': existing_tag.id,
+                'name': existing_tag.name,
+                'note_count': len([note for note in existing_tag.notes if note.notebook.owner_id == current_user.id])
+            })
+    
+    # Create a new tag if not found
     tag = Tag(name=data['name'])
     db.session.add(tag)
     db.session.commit()
+
     return jsonify({
         'id': tag.id,
         'name': tag.name,
@@ -53,6 +57,7 @@ def create_tag():
 @tag_routes.route('/<int:tag_id>', methods=['DELETE'])
 @login_required
 def delete_tag(tag_id):
+    # Get the tag by ID or return a 404 error if not found
     tag = Tag.query.get_or_404(tag_id)
 
     # Remove the tag from the current user's notes
@@ -60,15 +65,13 @@ def delete_tag(tag_id):
     for note in user_notes_with_tag:
         note.tags.remove(tag)
 
-    # Delete the tag if it's no longer associated with any notes
+    # If the tag is no longer associated with any notes, delete it
     if not tag.notes:
         db.session.delete(tag)
 
     db.session.commit()
+
     return jsonify({'message': 'Tag deleted successfully'})
-
-
-
 
 
 
