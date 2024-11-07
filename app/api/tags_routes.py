@@ -1,10 +1,10 @@
 from flask import Blueprint, request, jsonify
 from flask_login import login_required, current_user
-from app.models import db, Tag, Note, Notebook
+from app.models import db, Tag, Note, Notebook  #this is the correct syntax (app.models)
 
 tag_routes = Blueprint('tags', __name__)
 
-@tag_routes.route('', methods=['GET'])
+@tag_routes.route('', methods=['GET'])  
 @login_required
 def get_tags():
     tags = Tag.query.join(Tag.notes).join(Note.notebook).filter(
