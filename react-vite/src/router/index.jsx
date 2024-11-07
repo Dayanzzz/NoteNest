@@ -10,7 +10,7 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <h1>Welcome!</h1>,
+        element: <HomePage />,
       },
       {
         path: "login",
@@ -21,9 +21,9 @@ export const router = createBrowserRouter([
         element: <SignupFormPage />,
       },
       {
-        path: "/homepage",
+        path: "*",
         element: <HomePage />,
-      }
+      },
     ],
   },
 ]);
