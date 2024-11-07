@@ -14,11 +14,27 @@ def seed_notebooks():
         name='Project X Notebook', 
         owner_id=3 
     )
+    notebook4 = Notebook(
+        name='Daily Notes', 
+        owner_id=1  
+    )
+    notebook5 = Notebook(
+        name='Weekly Notes', 
+        owner_id=1  
+    )
+    notebook6 = Notebook(
+        name='Journaling', 
+        owner_id=1  
+    )
 
     db.session.add(notebook1)
     db.session.add(notebook2)
     db.session.add(notebook3)
+    db.session.add(notebook4)
+    db.session.add(notebook5)
+    db.session.add(notebook6)
 
+    
     db.session.commit()
 
 
