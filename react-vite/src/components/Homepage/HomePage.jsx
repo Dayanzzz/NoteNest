@@ -4,7 +4,7 @@ import { getAllNotebooks } from "../../redux/notebooks";
 import Homepage from "../../../src/components/Homepage/Homepage.css"
 import { FaBook } from "react-icons/fa";
 import dummyText from "../../../src/components/Homepage/DummyText";
-
+import Sidebar from "../Sidebar/Sidebar";
 
 function HomePage() {
   const dispatch = useDispatch();
@@ -23,26 +23,7 @@ console.log("notebooks:",notebooks);
 
   return (
     <div className="page-wrapper">
-      <div className="nav-bar">
-        <div className="user-name">
-          <h2>{ !user? "Welcome" : user.username}</h2>
-        </div>
-        <div className="nav-btn-area">
-          <div>Notebooks</div><div>+</div>
-        </div>
-        <div className="nav-btn-area">
-          <div>Notebooks</div><div>+</div>
-        </div>
-        <div className="nav-btn-area">
-          <div>Notebooks</div><div>+</div>
-        </div>
-        <div className="nav-btn-area">
-          <div>Notebooks</div><div>+</div>
-        </div>
-        <div className="nav-btn-area">
-          <div>Notebooks</div><div>+</div>
-        </div>
-      </div>
+      <Sidebar />
       {/* NavBar End */}
       <div className="content-wrapper">
         <div className="sign-in-icon-area">
@@ -52,9 +33,9 @@ console.log("notebooks:",notebooks);
             <h1 className="notebook-header">NOTEBOOKS</h1>
             <div className="notebooks-populated-area">
               {notebooks.map((notebook) => (
-                <div key={notebook.id}>
+                <div className="notebook-instance" key={notebook.id}>
                   <h1 className="notebook-icon"><FaBook /></h1>
-                  <h2>{notebook.name}</h2>                
+                  <h3>{notebook.name}</h3>                
                 </div>
               ))}
               </div>
