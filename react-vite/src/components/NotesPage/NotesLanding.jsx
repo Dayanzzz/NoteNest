@@ -4,10 +4,12 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { thunkFetchNotes, thunkDeleteNote } from '../../redux/notes';
 import Sidebar from '../Sidebar/Sidebar';
+import { useNavigate } from 'react-router-dom';
 
 
   function NotesPage() {
     const dispatch = useDispatch();
+    const navigate = useNavigate(); 
     const notes = useSelector((state) => state.notes.notes);
   
 
@@ -16,7 +18,7 @@ import Sidebar from '../Sidebar/Sidebar';
     }, [dispatch]);
 
   const handleEdit = (noteId) => {
-    alert(`Edit note with ID: ${noteId}`);
+    navigate(`/notes/${noteId}`);
  
   };
 

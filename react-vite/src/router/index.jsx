@@ -4,7 +4,7 @@ import SignupFormPage from '../components/SignupFormPage';
 import NotesPage from '../components/NotesPage/NotesLanding';
 import Layout from './Layout';
 import HomePage from '../components/Homepage/HomePage';
-import EditNotePage from '../components/NotesPage/UpdateNote'
+import UpdateNote from '../components/NotesPage/UpdateNote'
 import CreateNotePage from '../components/NotesPage/CreateNote';
 
 export const router = createBrowserRouter([
@@ -27,11 +27,11 @@ export const router = createBrowserRouter([
         path:"notes",
         element: <NotesPage/>,
       },
-      // {
+      {
         
-      //   path: "/notes/:noteId", 
-      //   element: <UpdateNote />, 
-      // },
+        path: "/notes/:noteId", 
+        element: <UpdateNote />, 
+      },
       {
         path: "newnote",
         element: <CreateNotePage/>,
