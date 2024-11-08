@@ -1,0 +1,151 @@
+/* Task Components Styles */
+
+/* Common animations */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* General task component styles */
+.task-container {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Create Task Form Styles */
+.task-form input:focus,
+.task-form textarea:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+  border-color: #3b82f6;
+}
+
+.task-form textarea {
+  resize: vertical;
+  min-height: 100px;
+  max-height: 300px;
+}
+
+/* Error message animation */
+.task-form-error {
+  animation: slideIn 0.3s ease-out;
+}
+
+/* Task List Styles */
+.task-list-container {
+  min-height: 200px;
+}
+
+.task-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.task-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 
+              0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* Task card action buttons */
+.task-action-button {
+  transition: background-color 0.2s ease;
+  opacity: 0.7;
+}
+
+.task-card:hover .task-action-button {
+  opacity: 1;
+}
+
+.task-action-button:active {
+  transform: scale(0.95);
+}
+
+/* Loading state styles */
+.task-loading {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Single Task View Styles */
+.task-detail-container {
+  animation: fadeIn 0.4s ease-out;
+}
+
+.task-description {
+  line-height: 1.6;
+  word-break: break-word;
+}
+
+/* Custom scrollbar for description */
+.task-description::-webkit-scrollbar {
+  width: 8px;
+}
+
+.task-description::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.task-description::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+.task-description::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .task-card {
+    margin-bottom: 1rem;
+  }
+  
+  .task-action-button {
+    opacity: 1;
+  }
+  
+  .task-form textarea {
+    min-height: 80px;
+  }
+}
+
+/* Print styles */
+@media print {
+  .task-action-button,
+  .task-form button {
+    display: none;
+  }
+  
+  .task-card {
+    break-inside: avoid;
+    box-shadow: none;
+  }
+  
+  .task-description {
+    max-height: none;
+    overflow: visible;
+  }
+}
