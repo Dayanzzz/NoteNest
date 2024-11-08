@@ -1,66 +1,60 @@
-import { useState } from "react";
-import { thunkLogin } from "../../redux/session";
-import { useDispatch, useSelector } from "react-redux";
-import { Navigate, useNavigate } from "react-router-dom";
-import CreateNotebookStyle from "../Notebooks/CreateNotebookStyle.css";
+import  { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import './CreateNotebookStyle.css'
+import Sidebar from '../Sidebar/Sidebar';
+import { createNotebook } from '../../redux/notebooks';
 
-function CreateNotebookForm() {
-  const navigate = useNavigate();
+
+const CreateNotebookPage = () => {
   const dispatch = useDispatch();
-  const sessionUser = useSelector((state) => state.session.user);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
+  const [name, setName] = useState('');
+  const [error, setError] = useState(null); 
+  let createdNotebook = null;
 
-  if (sessionUser) return <Navigate to="/" replace={true} />;
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+    const handleSubmit = async (e) => {
+        e.preventDefault();
 
-    const serverResponse = await dispatch(
-      thunkLogin({
-        email,
-        password,
-      })
-    );
+        const notebookData = {
+        name,
+        };
 
-    if (serverResponse) {
-      setErrors(serverResponse);
-    } else {
-      navigate("/");
-    }
-  };
+        try {
+            createdNotebook = await dispatch(createNotebook(notebookData));
+            window.location.href = `/notebooks/manage`;
+            console.log("Form Executed Here")
+        } catch (error) {
+            setErrors({ submission: "Error when trying to create a review." });
+        }
+    };
+
 
   return (
-    <>
-      <h1>Create A New Notebook</h1>
-      {errors.length > 0 &&
-        errors.map((message) => <p key={message}>{message}</p>)}
+    <div className="Create-wrapper">
+      <Sidebar />
+    <div className="create-note-container">
+      <h1>Create a New Notebook</h1>
       <form onSubmit={handleSubmit}>
-        <label>
-          Email
+        <div className="form-group">
+          <label htmlFor="title">Notebook Name:</label>
           <input
             type="text"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            id="title"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
             required
           />
-        </label>
-        {errors.email && <p>{errors.email}</p>}
-        <label>
-          Password
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </label>
-        {errors.password && <p>{errors.password}</p>}
-        <button type="submit">Log In</button>
+        </div>
+       
+        <button type="submit">Create Notebook</button>
       </form>
-    </>
-  );
-}
 
-export default CreateNotebookForm;
+      {error && <p className="error">{error}</p>}
+    </div>
+    </div>
+  );
+};
+
+export default CreateNotebookPage;

@@ -5,6 +5,9 @@ import NotesPage from '../components/NotesPage/NotesLanding';
 import Layout from './Layout';
 import HomePage from '../components/Homepage/HomePage';
 import ManageNotebooks from '../components/Notebooks/ManageNotebooks';
+import CreateNotebookPage from '../components/Notebooks/CreateNotebook';
+
+
 
 export const router = createBrowserRouter([
   {
@@ -29,6 +32,10 @@ export const router = createBrowserRouter([
       {
         path: 'notebooks/manage',
         element:<ManageNotebooks />,
+      },
+      {
+        path: 'notebooks/create',
+        element:<CreateNotebookPage />,
       },
       // {
         
