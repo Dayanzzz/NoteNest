@@ -1,4 +1,4 @@
-/* Container for the form */
+
 .create-note-container {
     width: 100%;
     max-width: 600px;
@@ -30,7 +30,7 @@
     color: #333;
   }
   
-  /* Form Group Styling */
+  
   .form-group {
     margin-bottom: 20px;
   }
@@ -61,14 +61,14 @@
     outline: none;
   }
   
-  /* Error message styling */
+
   .error {
     color: red;
     font-size: 0.9rem;
     margin-top: 10px;
   }
   
-  /* Submit button styling */
+ 
   button {
     width: 100%;
     padding: 12px;
@@ -89,7 +89,7 @@
     outline: none;
   }
   
-  /* Media query for responsive design */
+
   @media (max-width: 600px) {
     .create-note-container {
       padding: 15px;
