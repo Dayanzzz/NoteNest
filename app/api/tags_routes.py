@@ -4,7 +4,7 @@ from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
 from app.models import db, Tag, Note, Notebook
 
-tag_routes = Blueprint('tags', __name__)
+tag_routes = Blueprint('tags', __name__, url_prefix='/api/tags')
 
 # GET /tags - Get all tags for the current user
 @tag_routes.route('/', methods=['GET'])
