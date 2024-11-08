@@ -78,7 +78,7 @@ export const thunkFetchNotes = () => async (dispatch) => {
   // Update an existing note
   export const thunkUpdateNote = (updatedNote) => async (dispatch) => {
     try {
-      const response = await fetch(`/api/notes/${updatedNote.id}`, {
+      const response = await fetch(`/api/notes/${noteId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -158,7 +158,7 @@ const notesReducer = (state = initialState, action) => {
           ...state,
           notes: state.notes.filter(note => note.id !== action.payload),
         };
-        
+
     default:
       return state;
   }

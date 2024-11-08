@@ -4,15 +4,8 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { thunkFetchNotes, thunkDeleteNote } from '../../redux/notes';
 import Sidebar from '../Sidebar/Sidebar';
-// function NotesPage() {
-//   const [notes, setNotes] = useState([]);
 
-  // useEffect(() => {
-  //   fetch('http://localhost:5173/api/notes')
-  //     .then((response) => response.json())
-  //     .then((data) => setNotes(data))
-  //     .catch((error) => console.error('Error:', error));
-  // }, []); 
+
   function NotesPage() {
     const dispatch = useDispatch();
     const notes = useSelector((state) => state.notes.notes);
@@ -29,9 +22,9 @@ import Sidebar from '../Sidebar/Sidebar';
 
 
   const handleDelete = (noteId) => {
-    const confirmDelete = window.confirm('Are you sure you want to delete this note?'); // Confirm delete
+    const confirmDelete = window.confirm('Are you sure you want to delete this note?'); 
     if (confirmDelete) {
-      dispatch(thunkDeleteNote(noteId));  // Dispatch the delete thunk action
+      dispatch(thunkDeleteNote(noteId));  
     }
   };
 
