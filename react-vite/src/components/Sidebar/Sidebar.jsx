@@ -15,8 +15,8 @@ function Sidebar(){
                 <NavLink title="Create a new Notebook">+</NavLink>
             </div>
             <div className="sidebar-btn-area">
-            <NavLink to="/newnote" title="See Your Notes">Notes</NavLink>
-            <NavLink title="Create a new Note">+</NavLink>
+            <NavLink to="/notes" title="See Your Notes">Notes</NavLink>
+            <NavLink to="/newnote" title="Create a new Note">+</NavLink>
             </div>
             <div className="sidebar-btn-area">
             <NavLink to="/tasks" title="See Your Tasks">Tasks</NavLink>

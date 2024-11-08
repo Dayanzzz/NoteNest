@@ -37,30 +37,42 @@ def get_notes():
 def create_note():
     data = request.get_json()
     
-    # Ensure all necessary data is present
+    
     if not data.get('title') or not data.get('content'):
         return jsonify({'error': 'Title and content are required'}), 400
     
     notebook_id = data.get('notebook_id')
     
-    # Verify the notebook exists and belongs to the current user
+    
     notebook = Notebook.query.filter_by(id=notebook_id, owner_id=current_user.id).first()
     if not notebook:
         return jsonify({'error': 'Invalid notebook or notebook not found'}), 404
     
-    # Create a new note
+    
     new_note = Note(
         notebook_id=notebook_id,
         title=data['title'],
         content=data['content'],
-        owner_id=current_user.id
+        
     )
     
-    # Add tags if present in request
+   
     if data.get('tags'):
-        tags = [Tag.query.filter_by(name=tag).first() for tag in data['tags']]
+        tags = []
+        for tag_name in data['tags']:
+            tag = Tag.query.filter_by(name=tag_name).first()  
+
+            if tag:  
+                tags.append(tag)
+            else:
+                
+                new_tag = Tag(name=tag_name)
+                db.session.add(new_tag)
+                tags.append(new_tag)
+
+       
         new_note.tags.extend(tags)
-    
+
     db.session.add(new_note)
     db.session.commit()
 
