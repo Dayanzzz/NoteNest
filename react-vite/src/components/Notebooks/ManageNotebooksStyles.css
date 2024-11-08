@@ -1,0 +1,81 @@
+.page-wrapper{
+    display: flex;
+    flex-direction: row;
+    align-self: center;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    max-width: 1200px;
+    height: 100%;
+    min-height: 1200px;
+    background-color: rgb(242, 255, 208);
+}
+
+
+.sidebar-btn-area{
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    gap: 25px;
+    width: 75%;
+    padding-bottom: 25px;
+}
+
+.user-name{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 75%;
+    text-align: left;
+
+    padding-bottom: 125px;
+    padding-top: 25px;
+}
+
+.note-books-area{
+    display: flex;
+    flex-direction: column;
+    min-height: 150px;
+    gap: 25px;
+    padding-left: 75px;
+}
+
+.manage-notebook-header{
+    font-size: 35px;
+    padding-left: 25px;
+    padding-top: 55px;
+}
+
+.note-book-icons{
+    display: flex;
+    gap: 25px;
+    padding-left: 25px;
+    font-size: 55px;
+}
+
+.notebooks-populated-area{
+    display: flex;
+    flex-direction: row;
+    padding-top: 25px;
+}
+
+.notebook-instance{
+    display: flex;
+    flex-direction: column;
+    width: 120px;
+    min-width: 120px;
+    padding-left: 50px;
+}
+
+.notebook-icon{
+    font-size: 4.5em;
+    padding: 0px;
+    margin: 0px;
+    line-height:5px ;
+}
+
+.edit-delete-btn-area{
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+}
