@@ -1,151 +1,211 @@
-/* Task Components Styles */
-
-/* Common animations */
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* Common styles */
+.errors {
+  color: red;
+  margin-bottom: 1rem;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+/* Create Task Page */
+.create-task-container {
+  display: flex;
+  padding: 2rem;
+  gap: 2rem;
 }
 
-/* General task component styles */
-.task-container {
-  animation: fadeIn 0.3s ease-in-out;
+.left-panel {
+  width: 300px;
 }
 
-/* Create Task Form Styles */
-.task-form input:focus,
-.task-form textarea:focus {
-  outline: none;
-  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
-  border-color: #3b82f6;
+.right-panel {
+  flex: 1;
 }
 
-.task-form textarea {
-  resize: vertical;
+.task-preview {
+  border: 1px solid #ccc;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 4px;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.form-group textarea {
   min-height: 100px;
-  max-height: 300px;
+  resize: vertical;
 }
 
-/* Error message animation */
-.task-form-error {
-  animation: slideIn 0.3s ease-out;
+.priority-options {
+  display: flex;
+  gap: 1rem;
 }
 
-/* Task List Styles */
-.task-list-container {
-  min-height: 200px;
+.priority-label {
+  cursor: pointer;
+}
+
+.priority-label input {
+  display: none;
+}
+
+.priority-btn {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  color: white;
+}
+
+.priority-btn.low {
+  background-color: #4CAF50;
+}
+
+.priority-btn.medium {
+  background-color: #FFC107;
+}
+
+.priority-btn.high {
+  background-color: #f44336;
+}
+
+.priority-label input:checked + .priority-btn {
+  outline: 2px solid black;
+}
+
+.form-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+/* View All Tasks Page */
+.tasks-page {
+  padding: 2rem;
+}
+
+.tasks-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+  margin-top: 2rem;
 }
 
 .task-card {
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.task-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 
-              0 2px 4px -1px rgba(0, 0, 0, 0.06);
-}
-
-/* Task card action buttons */
-.task-action-button {
-  transition: background-color 0.2s ease;
-  opacity: 0.7;
-}
-
-.task-card:hover .task-action-button {
-  opacity: 1;
-}
-
-.task-action-button:active {
-  transform: scale(0.95);
-}
-
-/* Loading state styles */
-.task-loading {
-  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-
-@keyframes pulse {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.5;
-  }
-}
-
-/* Single Task View Styles */
-.task-detail-container {
-  animation: fadeIn 0.4s ease-out;
-}
-
-.task-description {
-  line-height: 1.6;
-  word-break: break-word;
-}
-
-/* Custom scrollbar for description */
-.task-description::-webkit-scrollbar {
-  width: 8px;
-}
-
-.task-description::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  border: 1px solid #ccc;
+  padding: 1rem;
   border-radius: 4px;
 }
 
-.task-description::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
+.task-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.priority-tag {
+  padding: 0.25rem 0.5rem;
   border-radius: 4px;
+  color: white;
 }
 
-.task-description::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
+.priority-tag.high {
+  background-color: #f44336;
 }
 
-/* Responsive adjustments */
-@media (max-width: 640px) {
-  .task-card {
-    margin-bottom: 1rem;
-  }
-  
-  .task-action-button {
-    opacity: 1;
-  }
-  
-  .task-form textarea {
-    min-height: 80px;
-  }
+.priority-tag.medium {
+  background-color: #FFC107;
 }
 
-/* Print styles */
-@media print {
-  .task-action-button,
-  .task-form button {
-    display: none;
+.priority-tag.low {
+  background-color: #4CAF50;
+}
+
+/* Single Task Detail Page */
+.single-task-container {
+  padding: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.task-content {
+  margin-top: 2rem;
+}
+
+.task-details {
+  margin-bottom: 2rem;
+}
+
+.button-group {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+/* Buttons */
+.update-btn, .delete-btn, .complete-btn, .create-btn, .cancel-btn {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.update-btn {
+  background-color: #2196F3;
+  color: white;
+}
+
+.delete-btn {
+  background-color: #f44336;
+  color: white;
+}
+
+.complete-btn {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.create-btn {
+  background-color: #2196F3;
+  color: white;
+}
+
+.cancel-btn {
+  background-color: #9e9e9e;
+  color: white;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .create-task-container {
+    flex-direction: column;
   }
-  
-  .task-card {
-    break-inside: avoid;
-    box-shadow: none;
+
+  .left-panel {
+    width: 100%;
   }
-  
-  .task-description {
-    max-height: none;
-    overflow: visible;
+
+  .tasks-grid {
+    grid-template-columns: 1fr;
   }
 }

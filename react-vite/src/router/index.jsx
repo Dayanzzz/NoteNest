@@ -4,7 +4,10 @@ import SignupFormPage from '../components/SignupFormPage';
 import NotesPage from '../components/NotesPage/NotesLanding';
 import Layout from './Layout';
 import HomePage from '../components/Homepage/HomePage';
-import {CreateTask, TasksList, SingleTaskView} from '../components/Tasks/generalTask';
+
+import { ViewAllTasks } from '../components/Tasks/ViewAllTasks';
+// import { CreateTask } from '../components/Tasks/CreateTasks';
+// import { SingleTaskDetail } from '../components/Tasks/SingleTaskView';
 
 export const router = createBrowserRouter([
   {
@@ -32,19 +35,20 @@ export const router = createBrowserRouter([
       //   element: <UpdateNote />, 
       
       // }
+      
       {
-        path:"tasks",
-        element: <CreateTask />
-      },
-      {
-        path:"tasks/list",
-        element: <TasksList />
+        path:"tasks/",
+        element: <ViewAllTasks />
 
       },
-      {
-        path:"tasks/:taskId",
-        element: <SingleTaskView />
-      }
+      // {
+      //   path:"tasks/new",
+      //   element: <CreateTask />
+      // },
+      // {
+      //   path:"tasks/:taskId",
+      //   element: <SingleTaskDetail />
+      // }
     ],
   },
 ]);

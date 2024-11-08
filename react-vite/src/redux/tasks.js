@@ -49,17 +49,27 @@ export const deleteTask = (deteledTask_id) => ({
 
 // Fetch all the tasks
 export const setAllTasksThunk = () => async (dispatch) => {
-  const response = await fetch("api/tasks");
-  if (response.ok){
-    const data = await response.json();
-    dispatch(setAllTasks(data));
-
-  }else {
-    console.error("Error fetching tasks")
-    return {error: "Something went wrong when fetching all tasks data"}
-
+  try {
+    const response = await fetch("api/tasks");
+    if (response.ok){
+      const data = await response.json();
+  
+      if(Array.isArray(data)){
+        dispatch(setAllTasks(data));
+      } else {
+        console.error("Expected array of tasks but gotf:", data)
+      }
+      
+    }else {
+      const errorData = await response.json();
+      console.error("Error fetching tasks", errorData)
+      
+    }
+  } catch (error){
+    console.error("Network error:", error);
   }
-}
+
+};
 
 // Fetch one specific task
 
@@ -67,6 +77,9 @@ export const setOneTaskThunk = (task_id) => async (dispatch) => {
   const response = await fetch(`api/tasks/${task_id}`)
   if(response.ok){
     const data = await response.json();
+
+    console.log("API Response:", data); // Debug log
+
     dispatch(setTask(data))
   }else {
     console.error("Error fetching a task")
@@ -91,8 +104,10 @@ export const createATaskThunk = (taskData) => async (dispatch) => {
     dispatch(setAllTasksThunk());// re-fetching, to remain the consistensy with backend
     return newTask;
   }else {
-    console.error("Error fetching a spot")
-    return {error: "Something went wrong when creating a task"}
+    const error = await response.json();
+    return { error: error.message || "Something went wrong when fetching all the tasks data" };
+    // console.error("Error creating a task")
+    // return {error: "Something went wrong when creating a task"}
   }
 }
 
@@ -151,6 +166,9 @@ const tasksReducer = (state = initialState, action) => {
       action.payload.forEach((task) => {
         newState.allTasks[task.id] = task
       });
+
+      console.log("New state:", newState); // Debug log
+      
       return newState;
     }
 
