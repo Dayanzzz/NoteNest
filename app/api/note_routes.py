@@ -112,9 +112,6 @@ def handle_note(note_id):
         })
 
     elif request.method == 'PUT':
-        
-
-        
         data = request.get_json()
 
         if not data:
@@ -131,22 +128,26 @@ def handle_note(note_id):
             note.content = content
 
         
-        if data.get('tags'):
-            note.tags = [] 
+        if data.get('tags') is not None:
             tags = []
+            note.tags = []
 
             
             for tag in data['tags']:
-                existing_tag= Tag.query.filter_by(name=tag).first()
+                existing_tag = Tag.query.filter_by(name=tag).first()
+
                 if existing_tag:
                     tags.append(existing_tag)
                 else:
+    
                     new_tag = Tag(name=tag)
                     db.session.add(new_tag)
-                    note.tags.append(new_tag)
+                    tags.append(new_tag)
+
+            
+            note.tags.extend(tags)
 
         
-        note.tags =tags
         db.session.commit()
 
         
