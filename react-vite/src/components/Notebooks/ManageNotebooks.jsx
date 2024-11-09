@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllNotebooks } from "../../redux/notebooks";
 import Sidebar from "../Sidebar/Sidebar";
 import OpenModalButton from "./OpenModalButton";
-import DeleteConfirmModal from "./DeleteConfirmModal";
+import DeleteNotebookConfirmModal from "./DeleteNotebookConfirmModal";
 import ManageNotebooksStyles from "../Notebooks/ManageNotebooksStyles.css";
 import { FaBook } from "react-icons/fa";
 
@@ -30,7 +30,7 @@ function ManageNotebooks() {
                   <h3>{notebook.name}</h3>
                   <div className="edit-delete-btn-area">
                     <button>Edit</button>
-                    <OpenModalButton buttonText="Delete"  modalComponent={<DeleteConfirmModal notebookId={notebook.id}/>}/>
+                    <OpenModalButton buttonText="Delete"  modalComponent={<DeleteNotebookConfirmModal notebookId={notebook.id}/>}/>
                   </div>                
                 </div>
               ))}

@@ -6,13 +6,13 @@ const initialState = {
 };
 
 
-// Action Type
+//// Action Type
 const GET_NOTEBOOKS = "notebooks/getNotebooks";
 const ADD_NOTEBOOK = "notebooks/addNotebook";
 const DELETE_A_NOTEBOOK = "notebooks/deleteNotebook"
 
 
-// Action creator
+//// Action creator
 const getNotebooks = (notebooks) => ({
     type: GET_NOTEBOOKS,
     payload: notebooks,

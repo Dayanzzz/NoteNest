@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useModal } from '../../context/Modal';
-import '../../components/Notebooks/DeleteConfirmModal.css';
+import '../../components/Notebooks/DeleteNotebookConfirmModal.css';
 import { deleteANotebook } from '../../redux/notebooks';
 
-function DeleteConfirmModal({ notebookId }) {
+function DeleteNotebookConfirmModal({ notebookId }) {
 const dispatch = useDispatch();
   const { closeModal } = useModal();
   const notebooks = useSelector((state) => state.notebooks.notebooks);
@@ -33,4 +33,4 @@ const dispatch = useDispatch();
   );
 }
 
-export default DeleteConfirmModal;
+export default DeleteNotebookConfirmModal;
