@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { thunkUpdateNote } from '../../redux/notes';
+import { thunkFetchNotes, thunkUpdateNote } from '../../redux/notes';
 import Sidebar from '../Sidebar/Sidebar';
 import './UpdateNote.css'
 
@@ -58,8 +58,9 @@ const UpdateNote = () => {
       if (response.ok) {
       const updatedData = await response.json();
       dispatch(thunkUpdateNote(noteId, updatedData));
+      dispatch(thunkFetchNotes());
       alert("Note updated successfully");
-      navigate(`/notes/${noteId}`); 
+      navigate(`/notes/`); 
       } else {
         const result = await response.json();
         setError(result.error || 'Something went wrong');
@@ -68,6 +69,10 @@ const UpdateNote = () => {
       setError('Error updating note');
       console.error(err);
     }
+  };
+
+  const handleCancel = () => {
+    navigate('/notes'); 
   };
 
   return (
@@ -107,7 +112,10 @@ const UpdateNote = () => {
             onChange={(e) => setNote({ ...note, tags: e.target.value.split(',').map(tag => tag.trim()) })}  
           />
         </div>
-        <button type="submit">Update Note</button>
+        <div className="updatenotebtn">
+        <button className="updateSubmit"type="submit">Update Note</button>
+        <button className = "updateCancel" type="button" onClick={handleCancel} >Cancel</button>
+        </div>
       </form>
     </div>
     </div>

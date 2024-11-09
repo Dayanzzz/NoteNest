@@ -88,21 +88,19 @@ export const thunkFetchNotes = () => async (dispatch) => {
       });
       
       if (response.ok) {
-        const note = await response.json();
-        
-        dispatch(updateNote(note)); 
-      } else if (response.status < 500) {
-        const errorMessages = await response.json();
-        console.error("Error updating note:", errorMessages);
-        return errorMessages;
-      } else {
-        console.error("Server error:", response.status);
-        return { server: "Something went wrong. Please try again" };
-      }
-    } catch (error) {
-      console.error("Update note error:", error);
+      const updatedNote = await response.json();
+      // Dispatch the update to the Redux store with the updated note
+      dispatch({
+        type: 'UPDATE_NOTE',
+        payload: updatedNote,
+      });
+    } else {
+      console.error('Failed to update note');
     }
-  };
+  } catch (err) {
+    console.error('Error updating note:', err);
+  }
+};
   
 
   // Delete a note
