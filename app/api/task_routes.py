@@ -17,28 +17,31 @@ def get_tasks():
 # POST /tasks - Create new task
 @task_routes.route('/', methods=['POST'])
 @login_required
+
 def create_task():
   data = request.get_json()
+
+  if not current_user.is_authenticated:
+    return jsonify({"errors": {"message": "Unauthorized"}}), 401
 
   task = Task(
     user_id = current_user.id,
     name = data['name'],
-
     # Default to empty string if not provided
-    description = data.get('description','')
+    description = data.get('description',''),
+    priority = data.get('priority', 'low')  # Add this line
   )
 
   db.session.add(task)
   db.session.commit()
 
-  return jsonify({
-      'id': task.id,
-      'name': task.name,
-      'description': task.description,
-      'created_at': task.created_at,
-      'updated_at': task.updated_at,
-      'user_id': task.user_id,  
-  }), 201
+  # result = task.to_dict()
+  # print("Created task:", result)  # Debug log
+  # return jsonify(result), 201
+
+
+  return jsonify(task.to_dict()), 201
+
 
 # GET /tasks/<id> - Get specific task
 @task_routes.route('/<int:task_id>',methods=['GET'])

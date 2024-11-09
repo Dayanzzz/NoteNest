@@ -1,34 +1,29 @@
 import { useState, useEffect } from 'react';
-import { useDispatch, useSelector} from 'react-redux';
-import { createATaskThunk, setAllTasksThunk } from '../../redux/tasks';
-// import { AlertCircle, Edit, Trash2, Plus, Clock, User } from 'lucide-react';
+import { useDispatch, useSelector } from 'react-redux';
+import { editATaskThunk, setAllTasksThunk, setOneTaskThunk } from '../../redux/tasks';
+import { useNavigate, useParams } from 'react-router-dom';
 import './CreateTasks.css';
-import { useNavigate } from 'react-router-dom';
+
+
+
 
 //! --------------------------------------------------------------------
-//*                          CreateTask Component
+//*                          UpdateTask Component
 //! --------------------------------------------------------------------
 
-
-// CreateTasks.jsx
-export const CreateTask = () => {
-  const dispatch = useDispatch();
+//UpdateTasks.jsx
+export const UpdateTask = () => {
+  const { taskId } = useParams();
   const navigate = useNavigate();
-  const sessionUser = useSelector(state => state.session.user);  // Add this
+  const dispatch = useDispatch();
 
-  useEffect(() => {
-    // Redirect if not logged in
-    if (!sessionUser) {
-      navigate('/login');
-    }
-  }, [sessionUser, navigate]);
-
+  const task = useSelector(state => state.tasks.singleTask);
 
   const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [priority, setPriority] = useState("low");
+  const [description, setDescription] =  useState("");
+  const [priority, setPriority] = useState("low")
 
-  // Validation state
+  //validation state
   const [errors, setErrors] = useState({});
   const [hasSubmitted, setHasSubmitted] = useState(false);
 
@@ -37,17 +32,18 @@ export const CreateTask = () => {
   //! --------------------------------------------------------------------
 
   useEffect(() => {
-
-    dispatch(setAllTasksThunk());
-
-    return () => {
-      //Reset the form
-      setName("");
-      setDescription("")
-      setPriority("low")
+    dispatch(setOneTaskThunk(taskId))
+  },[dispatch, taskId])
+  
+  useEffect(() => {
+    //reset the form
+    if(task) {
+      setName(task.name || "");
+      setDescription(task.description || "");
+      setPriority(task.priority || "low")
       setHasSubmitted(false)
     }
-  },[dispatch]);
+  },[task]);
 
   const handleChange = async (e) => {
     e.preventDefault();
@@ -62,39 +58,42 @@ export const CreateTask = () => {
 
     //validate all fields
     if(!name.trim()) validationErrors.name = "name is required";
-    if(!description.trim()) validationErrors.description = "description is required";
+    if(!description.trim()) validationErrors.name = "description is required";
 
-    setErrors(validationErrors); //Update errors state
+    setErrors(validationErrors); 
 
     if(Object.keys(validationErrors).length > 0){
       return;
     }
 
-    const taskData = { 
+    const taskData = {
+      id: taskId, // Add this line - include the task ID
       name, 
-      description, 
-      priority,
-     }
-    console.log('Submitting task data:', taskData); // Add this log
-
-    const newTask = await dispatch(createATaskThunk(taskData));
-    console.log('Response from createATaskThunk:', newTask); // Add this log
-
-    if(newTask && newTask.id) {
-      await dispatch(setAllTasksThunk());
-      // navigate(`/tasks/${newTask.id}`)
-      navigate('/tasks/')
-      
-    }else{
-      console.error('Failed to create task:', newTask); // Add this log
+      description,
+      priority
     }
-  };
+    const editedTask = await dispatch(editATaskThunk(taskData));
+    if(editedTask && editedTask.id){
+      await dispatch(setAllTasksThunk());
+      await dispatch(setOneTaskThunk(editedTask.id));
+      // navigate(`/tasks/${editedTask.id}`)
+      navigate('/tasks/')
+    }else{
+      console.error('Failed to edit task:', editedTask);
+    }
+  }
+
+
+
+
+
+
+
+
 
   //! --------------------------------------------------------------------
   //                         Return JSX HTML Part
   //! --------------------------------------------------------------------
-
-
 
   return (
     <div className="create-task-container">
@@ -111,7 +110,7 @@ export const CreateTask = () => {
       </div>
 
       <div className="right-panel">
-        <h2>CREATE A TASK</h2>
+        <h2>UPDATE A TASK</h2>
 
         <form onSubmit={handleSubmit}>
 
@@ -188,7 +187,7 @@ export const CreateTask = () => {
             </div>
 
             <div className="form-action">
-              <button type="submit" className="create_button">Create Task</button>
+              <button type="submit" className="create_button">Update Task</button>
               <button type="button" onClick={() => navigate('/tasks')} className="cancel_button">Cancel</button>
             </div>
 
@@ -200,4 +199,7 @@ export const CreateTask = () => {
     </div>
     
   );
-};
+
+
+
+}

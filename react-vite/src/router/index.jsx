@@ -6,7 +6,8 @@ import Layout from './Layout';
 import HomePage from '../components/Homepage/HomePage';
 
 import { ViewAllTasks } from '../components/Tasks/ViewAllTasks';
-// import { CreateTask } from '../components/Tasks/CreateTasks';
+import { CreateTask } from '../components/Tasks/CreateTasks';
+import { UpdateTask } from '../components/Tasks/UpdateTasks';
 // import { SingleTaskDetail } from '../components/Tasks/SingleTaskView';
 
 export const router = createBrowserRouter([
@@ -41,14 +42,18 @@ export const router = createBrowserRouter([
         element: <ViewAllTasks />
 
       },
-      // {
-      //   path:"tasks/new",
-      //   element: <CreateTask />
-      // },
+      {
+        path:"tasks/new",
+        element: <CreateTask />
+      },
       // {
       //   path:"tasks/:taskId",
       //   element: <SingleTaskDetail />
-      // }
+      // },
+      {
+        path:"tasks/:taskId/edit",
+        element: <UpdateTask />
+      }
     ],
   },
 ]);

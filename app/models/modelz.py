@@ -3,6 +3,7 @@ from datetime import datetime
 from .user import User
 
 
+
 note_tags = db.Table('note_tags',
     db.Model.metadata,                 
     db.Column('note_id', db.Integer, db.ForeignKey(add_prefix_for_prod('notes.id')), primary_key=True),
@@ -98,8 +99,14 @@ class Task(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), nullable=False)
     description = db.Column(db.Text, nullable=True)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    priority = db.Column(db.String(10), default='low')  # Add this line
+
+    created_at = db.Column(db.DateTime, default=lambda: datetime.now())
+    updated_at = db.Column(db.DateTime, default=lambda: datetime.now(), onupdate=lambda: datetime.now())
+
+
+    # created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    # updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), nullable=False)
 
     user = db.relationship('User', back_populates='tasks')
@@ -112,8 +119,13 @@ class Task(db.Model):
             'id': self.id,
             'name': self.name,
             'description': self.description,
-            'created_at': self.created_at,
-            'updated_at': self.updated_at,
+            'priority': self.priority,  # Add this line
+            'created_at': self.created_at.strftime('%m/%d/%Y') if self.created_at else None,  
+            'updated_at': self.updated_at.strftime('%m/%d/%Y') if self.updated_at else None,  
+            # 'created_at': self.created_at,
+            # 'updated_at': self.updated_at,
             'user_id': self.user_id,
             'user': self.user.to_dict()  
         }
+
+ 
