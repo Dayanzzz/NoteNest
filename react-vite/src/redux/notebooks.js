@@ -1,11 +1,16 @@
 
+export const selectNotebooks = (state) => state.notebooks.notebooks;
+
 const initialState = {
     notebooks: [],
 };
 
+
 // Action Type
 const GET_NOTEBOOKS = "notebooks/getNotebooks";
 const ADD_NOTEBOOK = "notebooks/addNotebook";
+const DELETE_A_NOTEBOOK = "notebooks/deleteNotebook"
+
 
 // Action creator
 const getNotebooks = (notebooks) => ({
@@ -16,6 +21,11 @@ const getNotebooks = (notebooks) => ({
 const addNotebook = (addedNotebook) => ({
     type: ADD_NOTEBOOK,
     payload: addedNotebook,
+});
+
+const deleteNotebook = (notebookToDelete) => ({
+    type: DELETE_A_NOTEBOOK,
+    payload: notebookToDelete
 });
 
 /////////////////////// THUNKS //////////////////////////
@@ -72,6 +82,28 @@ export const getAllNotebooks = () => async (dispatch) => {
 };
 
 
+///////////Delete A Notebook THUNK
+
+export const deleteANotebook = (notebookId) => async (dispatch) => {
+
+    console.log("///////////////THUNK notebook ID:",notebookId);
+    try {
+        const response = await fetch(`/api/notebooks/${notebookId}`, {
+            method: "DELETE",
+        });
+
+        if (response.ok) {
+            dispatch(deleteNotebook(notebookId));
+            dispatch(getAllNotebooks());
+        } else {
+            throw new Error('Failed to delete the Notebook');
+        }
+    } catch (error) {
+        console.error('Error deleting the Notebook', error);
+    }
+};
+
+
 ///////////// NOTEBOOK REDUCER /////////////
 const notebooksReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -86,6 +118,13 @@ const notebooksReducer = (state = initialState, action) => {
                 ...state,
                 notebooks: [...state.notebooks, action.payload],
             };
+
+        case DELETE_A_NOTEBOOK:
+            return {
+                ...state,
+                notebooks: state.notebooks.filter(notebook => notebook.id !== action.payload.id)
+            };
+
         default: 
             return state;
     }
