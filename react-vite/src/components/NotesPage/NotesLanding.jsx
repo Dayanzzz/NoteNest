@@ -26,7 +26,8 @@ import { useNavigate } from 'react-router-dom';
   const handleDelete = (noteId) => {
     const confirmDelete = window.confirm('Are you sure you want to delete this note?'); 
     if (confirmDelete) {
-      dispatch(thunkDeleteNote(noteId));  
+      dispatch(thunkDeleteNote(noteId)); 
+      
     }
   };
 

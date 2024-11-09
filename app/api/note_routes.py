@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, abort
 from flask_login import login_required, current_user
 from ..models import db, Note, Notebook, Tag
 
@@ -86,35 +86,79 @@ def create_note():
     }), 201
 
 # PUT: Update an existing note
-@note_routes.route('/<int:id>', methods=['PUT'])
+
+
+@note_routes.route('/<int:note_id>', methods=['GET', 'PUT'])
 @login_required
-def update_note(id):
-    note = Note.query.filter_by(id=id, owner_id=current_user.id).first_or_404()
-    
-    data = request.get_json()
-    
-    # Update note fields if they are provided
-    if data.get('title'):
-        note.title = data['title']
-    if data.get('content'):
-        note.content = data['content']
-    
-    # Update tags if they are provided
-    if data.get('tags'):
-        note.tags = []  # Clear existing tags before adding new ones
-        tags = [Tag.query.filter_by(name=tag).first() for tag in data['tags']]
-        note.tags.extend(tags)
+def handle_note(note_id):
+    print(f"Received note_id: {note_id}")
+ 
+    note = Note.query.get(note_id)
 
-    db.session.commit()
+    
+    if not note or note.notebook.owner_id != current_user.id:
+        abort(404, description="Note not found or not owned by the current user")
 
-    return jsonify({
-        'id': note.id,
-        'title': note.title,
-        'content': note.content,
-        'created_at': note.created_at,
-        'updated_at': note.updated_at,
-        'tags': [tag.name for tag in note.tags]
-    })
+    if request.method == 'GET':
+        
+        return jsonify({
+            'id': note.id,
+            'notebook_id': note.notebook_id,
+            'title': note.title,
+            'content': note.content,
+            'created_at': note.created_at,
+            'updated_at': note.updated_at,
+            'tags': [tag.name for tag in note.tags]  
+        })
+
+    elif request.method == 'PUT':
+        
+
+        
+        data = request.get_json()
+
+        if not data:
+            
+            return jsonify({'error': 'No data provided'}), 400
+
+        
+        title = data.get('title')
+        content = data.get('content')
+
+        if title:
+            note.title = title
+        if content:
+            note.content = content
+
+        
+        if data.get('tags'):
+            note.tags = [] 
+            tags = []
+
+            
+            for tag in data['tags']:
+                existing_tag= Tag.query.filter_by(name=tag).first()
+                if existing_tag:
+                    tags.append(existing_tag)
+                else:
+                    new_tag = Tag(name=tag)
+                    db.session.add(new_tag)
+                    note.tags.append(new_tag)
+
+        
+        note.tags =tags
+        db.session.commit()
+
+        
+        return jsonify({
+            'id': note.id,
+            'title': note.title,
+            'content': note.content,
+            'created_at': note.created_at,
+            'updated_at': note.updated_at,
+            'tags': [tag.name for tag in note.tags]
+        })
+
 
 # DELETE: Delete a note by ID
 @note_routes.route('/<int:note_id>', methods=['DELETE'])

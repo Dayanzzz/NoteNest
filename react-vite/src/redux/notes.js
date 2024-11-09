@@ -60,7 +60,7 @@ export const thunkFetchNotes = () => async (dispatch) => {
       if (response.ok) {
         const createdNote = await response.json();
         console.log("Created Note:", createdNote);
-        dispatch(createNote(createdNote)); // Dispatch action to add the new note to the store
+        dispatch(createNote(createdNote)); 
       } else if (response.status < 500) {
         const errorMessages = await response.json();
         console.error("Error creating note:", errorMessages);
@@ -76,8 +76,9 @@ export const thunkFetchNotes = () => async (dispatch) => {
   
 
   // Update an existing note
-  export const thunkUpdateNote = (updatedNote) => async (dispatch) => {
+  export const thunkUpdateNote = (noteId, updatedNote) => async (dispatch) => {
     try {
+      console.log("Updating note with ID:", noteId);
       const response = await fetch(`/api/notes/${noteId}`, {
         method: 'PUT',
         headers: {
@@ -88,8 +89,8 @@ export const thunkFetchNotes = () => async (dispatch) => {
       
       if (response.ok) {
         const note = await response.json();
-        console.log("Updated Note:", note);
-        dispatch(updateNote(note)); // Dispatch action to update the note in the store
+        
+        dispatch(updateNote(note)); 
       } else if (response.status < 500) {
         const errorMessages = await response.json();
         console.error("Error updating note:", errorMessages);
@@ -113,7 +114,7 @@ export const thunkFetchNotes = () => async (dispatch) => {
       
       if (response.ok) {
         console.log("Deleted Note:", noteId);
-        dispatch(deleteNote(noteId)); // Dispatch action to remove the note from the store
+        dispatch(deleteNote(noteId)); 
       } else if (response.status < 500) {
         const errorMessages = await response.json();
         console.error("Error deleting note:", errorMessages);
