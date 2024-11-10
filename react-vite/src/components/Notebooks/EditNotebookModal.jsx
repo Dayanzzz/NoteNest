@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { updateNotebook, getAllNotebooks } from "../../redux/notebooks";
+import "./EditNotebookModal.css";
+
+
 
 function EditNotebookModal({ notebook }) {
     const dispatch = useDispatch();
@@ -37,11 +40,11 @@ function EditNotebookModal({ notebook }) {
   
     return (
       <>
-      <div className='modal-container'>
-        <h1 className='titleText'>Edit Your Notebook</h1>
+      <div className='modal-content'>
+        <h1>Edit Your Notebook</h1>
         <form onSubmit={handleSubmit}>
             <div className="form-group">
-            <label htmlFor="title">
+            <label htmlFor="title" className="form-title">
                 Notebook Name:
             </label>
             {errors.name && <p>{errors.name}</p>}
@@ -53,8 +56,11 @@ function EditNotebookModal({ notebook }) {
                 required
             />
             </div>
-            <button type="submit" onClick={handleSubmit}>Update Notebook</button>
-            <button type="submit" onClick={() => closeModal()}>Cancel</button>
+            <div className="modal-buttons">
+              <button type="submit" onClick={handleSubmit}>Update Notebook</button>
+              <button type="submit" onClick={() => closeModal()}>Cancel</button>
+            </div>
+
         </form>
 
       </div>
