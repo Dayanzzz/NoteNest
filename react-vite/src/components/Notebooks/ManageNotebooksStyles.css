@@ -53,10 +53,22 @@
     font-size: 55px;
 }
 
-.notebooks-populated-area{
+.notebooks-page-populated-area{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);  
+    grid-gap: 20px;  
+    padding: 25px 25px;
+    max-width: 1200px;
+    border-radius: 10px;
+    background-color: bisque;
+}
+
+.manage-notebook-title{
     display: flex;
     flex-direction: row;
-    padding-top: 25px;
+    height: 50px;
+    padding-bottom: 30px;
+    align-items: flex-start;
 }
 
 .notebook-instance{
@@ -64,14 +76,15 @@
     flex-direction: column;
     width: 120px;
     min-width: 120px;
-    padding-left: 50px;
+    padding-left:25px;
 }
 
 .notebook-icon{
     font-size: 4.5em;
-    padding: 0px;
+    padding: 20px 0px 0px 0px;
     margin: 0px;
     line-height:5px ;
+    color: rgb(106, 96, 83);
 }
 
 .edit-delete-btn-area{

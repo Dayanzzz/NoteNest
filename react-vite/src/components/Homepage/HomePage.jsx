@@ -32,7 +32,7 @@ console.log("notebooks:",notebooks);
         <div className="note-books-area">
             <h1 className="notebook-header">NOTEBOOKS</h1>
             <div className="notebooks-populated-area">
-              {notebooks.map((notebook) => (
+              {notebooks.slice(0, 5).map((notebook) => (
                 <div className="notebook-instance" key={notebook.id}>
                   <h1 className="notebook-icon"><FaBook /></h1>
                   <h3>{notebook.name}</h3>                

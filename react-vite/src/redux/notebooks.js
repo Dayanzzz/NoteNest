@@ -10,7 +10,7 @@ const initialState = {
 const GET_NOTEBOOKS = "notebooks/getNotebooks";
 const ADD_NOTEBOOK = "notebooks/addNotebook";
 const DELETE_A_NOTEBOOK = "notebooks/deleteNotebook"
-
+const UPDATE_NOTEBOOK = "notebooks/updateNotebook";
 
 //// Action creator
 const getNotebooks = (notebooks) => ({
@@ -27,6 +27,12 @@ const deleteNotebook = (notebookToDelete) => ({
     type: DELETE_A_NOTEBOOK,
     payload: notebookToDelete
 });
+
+const updateNotebookAction = (updatedNotebook) => ({
+    type: UPDATE_NOTEBOOK,
+    payload: updatedNotebook,
+});
+
 
 /////////////////////// THUNKS //////////////////////////
 
@@ -57,6 +63,26 @@ export const createNotebook = (addedNotebook) => async (dispatch) => {
     } catch (error) {
         console.error('Error creating notebook:', error);
         throw error;
+    }
+};
+
+/////Update A Notebook THUNK
+export const updateNotebook = (notebookId, notebook) => async (dispatch) => { 
+    console.log("=============THUNK CAKLLL",notebookId, notebook);
+    try {
+        const response = await fetch(`/api/notebooks/${notebookId}`, {
+            
+            method: "PUT",
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(notebook)
+        });
+        if (response.ok) {
+            const updatedNotebook = await response.json();
+            dispatch(updateNotebookAction(updatedNotebook));
+            return updatedNotebook;
+        }
+    } catch (err) {
+        console.error(`Error updating notebook: ${err}`);
     }
 };
 
@@ -123,6 +149,14 @@ const notebooksReducer = (state = initialState, action) => {
             return {
                 ...state,
                 notebooks: state.notebooks.filter(notebook => notebook.id !== action.payload.id)
+            };
+        
+        case UPDATE_NOTEBOOK:
+            return {
+                ...state,
+                notebooks: state.notebooks.map((notebook) =>
+                    notebook.id === action.updatedNotebook.id ? action.payload : notebook
+                ),
             };
 
         default: 

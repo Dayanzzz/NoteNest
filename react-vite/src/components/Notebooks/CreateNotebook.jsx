@@ -1,5 +1,4 @@
-import  { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import  { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import './CreateNotebookStyle.css'
 import Sidebar from '../Sidebar/Sidebar';
@@ -8,9 +7,8 @@ import { createNotebook } from '../../redux/notebooks';
 
 const CreateNotebookPage = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const [name, setName] = useState('');
-  const [error, setError] = useState(null); 
+  const [error, setErrors] = useState(null); 
   let createdNotebook = null;
 
 
@@ -24,7 +22,7 @@ const CreateNotebookPage = () => {
         try {
             createdNotebook = await dispatch(createNotebook(notebookData));
             window.location.href = `/notebooks/manage`;
-            console.log("Form Executed Here")
+            console.log(createdNotebook.id)
         } catch (error) {
             setErrors({ submission: "Error when trying to create a review." });
         }

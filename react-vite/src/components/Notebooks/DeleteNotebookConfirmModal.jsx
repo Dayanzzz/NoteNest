@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useModal } from '../../context/Modal';
 import '../../components/Notebooks/DeleteNotebookConfirmModal.css';
 import { deleteANotebook } from '../../redux/notebooks';
@@ -6,7 +6,6 @@ import { deleteANotebook } from '../../redux/notebooks';
 function DeleteNotebookConfirmModal({ notebookId }) {
 const dispatch = useDispatch();
   const { closeModal } = useModal();
-  const notebooks = useSelector((state) => state.notebooks.notebooks);
 
   const handleDelete = (notebookId) => {
     console.log('Notebook ID: Modal Handle Delete//////', notebookId)
