@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setAllTasksThunk, deleteATaskThunk } from '../../redux/tasks';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import './tasks.css';
 
 export const ViewAllTasks = () => {
@@ -33,9 +33,7 @@ export const ViewAllTasks = () => {
     task && task.user_id === sessionUser?.id
   );
 
-  // Debug prints
-  // console.log("Session User:", sessionUser);
-  // console.log("Tasks in store:", tasksObj);
+
 
   useEffect(() => {
    
@@ -69,30 +67,35 @@ export const ViewAllTasks = () => {
       </div>
       <div className="tasks-grid">
         {tasks && tasks.length > 0 ? (
-          tasks.map(task => (
-            <div key={task.id} className="task-card">
-              <h3>{task.name}</h3>
-              <p>{task.description}</p>
-              <div className="task-actions">
-                <div className="task-date">
-                  {formatDate(task.created_at)}  {/* Changed this line */}
-                </div>
-                <div className="action-buttons">
-                  <button
-                    className="update-btn"
-                    onClick={() => navigate(`/tasks/${task.id}/edit`)}
-                  >
-                    UPDATE
-                  </button>
-                  <button
-                    className="delete-btn"
-                    onClick={() => handleDelete(task.id)}
-                  >
-                    DELETE
-                  </button>
+          tasks.map((task, i)=> (
+
+            <Link to={`/tasks/${task.id}`} key={i}>
+
+              <div key={task.id} className="task-card">
+                <h3>{task.name}</h3>
+                <p>{task.description}</p>
+                <div className="task-actions">
+                  <div className="task-date">
+                    {formatDate(task.created_at)}  {/* Changed this line */}
+                  </div>
+                  <div className="action-buttons">
+                    <button
+                      className="update-btn"
+                      onClick={() => navigate(`/tasks/${task.id}/edit`)}
+                    >
+                      UPDATE
+                    </button>
+                    <button
+                      className="delete-btn"
+                      onClick={() => handleDelete(task.id)}
+                    >
+                      DELETE
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
+              
+            </Link>
           ))
         ) : (
           <p>No tasks found. Create a new task to get started!</p>

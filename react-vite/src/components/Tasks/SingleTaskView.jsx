@@ -1,91 +1,117 @@
 import { useState, useEffect } from 'react';
-import { useDispatch, useSelector, useNavigate } from 'react-redux';
-import { createATaskThunk, setAllTasksThunk, editATaskThunk, deleteATaskThunk } from '../../redux/tasks';
+import { useDispatch, useSelector} from 'react-redux';
+import { setAllTasksThunk, deleteATaskThunk, setOneTaskThunk} from '../../redux/tasks';
 // import { AlertCircle, Edit, Trash2, Plus, Clock, User } from 'lucide-react';
-import './tasks.css';
+import { useNavigate, useParams } from 'react-router-dom';
+import './SingleTaskView.css';
 
 
 
-// SingleTaskDetail.jsx
+//! --------------------------------------------------------------------
+//*                          SingleTaskDetail Component
+//! --------------------------------------------------------------------
+
+// SingleTaskView.jsx
 export const SingleTaskDetail = () => {
+  const { taskId } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const task = useSelector(state => state.tasks.singleTask);
-  const [isEditing, setIsEditing] = useState(false);
-  const [editData, setEditData] = useState({
-    name: '',
-    description: ''
-  });
+
+
+  // const SingleTask = useSelector(state => state.tasks.singleTask);
+  const tasksObj = useSelector(state => state.tasks.allTasks);
+  const singleTaskObj = Object.values(tasksObj).find((task) => task.id === Number(taskId));
+
+
+
+  //validation state
+  const[isLoading, setIsLoading] = useState(true);
+  const [isCompleted, setIsCompleted] = useState(false); // for the "Mark Completed"
+  
+
+
+  //! --------------------------------------------------------------------
+  //                          Handle Form Submit
+  //! --------------------------------------------------------------------
 
   useEffect(() => {
-    if (task.id) {
-      setEditData({
-        name: task.name,
-        description: task.description
-      });
-    }
-  }, [task]);
+    const loadTask = async () => {
+      setIsLoading(true);
+      try{
+        await Promise.all([
+          dispatch(setAllTasksThunk()),
+          dispatch(setOneTaskThunk(taskId))
+        ]);
+      } catch (error) {
+        console.error('Error loading task:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadTask();
+  }, [dispatch, taskId]);
+
+  if(isLoading){
+    return <div>Loading...</div>;
+  }
+
+  if(!singleTaskObj) {
+    return <h1> Task Not Found </h1>
+  }
+
+
 
   const handleUpdate = async (e) => {
     e.preventDefault();
-    const response = await dispatch(editATaskThunk({
-      id: task.id,
-      ...editData
-    }));
+    await navigate(`/tasks/${singleTaskObj.id}/edit`);
+    await dispatch(setAllTasksThunk());
+    await dispatch(setOneTaskThunk(singleTaskObj.id));
 
-    if (!response.error) {
-      setIsEditing(false);
-      navigate('/tasks');
-    }
   };
 
   const handleDelete = async () => {
-    await dispatch(deleteATaskThunk(task.id));
+    await dispatch(deleteATaskThunk(singleTaskObj.id));
+    await dispatch(setAllTasksThunk());
     navigate('/tasks');
   };
 
-  if (!task) return <div>Loading...</div>;
+  const handleChange = async (e) => {
+    e.preventDefault();
+    setIsCompleted(true);
+  }
+
+ 
+
+  //! --------------------------------------------------------------------
+  //                         Return JSX HTML Part
+  //! --------------------------------------------------------------------
 
   return (
     <div className="single-task-container">
-      <h2>TASK Name HERE</h2>
-      <div className="task-content">
-        {isEditing ? (
-          <form onSubmit={handleUpdate}>
-            <input
-              type="text"
-              value={editData.name}
-              onChange={e => setEditData(prev => ({...prev, name: e.target.value}))}
-            />
-            <textarea
-              value={editData.description}
-              onChange={e => setEditData(prev => ({...prev, description: e.target.value}))}
-            />
-            <div className="button-group">
-              <button type="submit">Save Changes</button>
-              <button type="button" onClick={() => setIsEditing(false)}>Cancel</button>
-            </div>
-          </form>
-        ) : (
-          <>
-            <div className="task-details">
-              <h3>Task Details:</h3>
-              <p>{task.description}</p>
-            </div>
-            <div className="task-actions">
-              <button onClick={() => setIsEditing(true)} className="update-btn">
-                UPDATE
-              </button>
-              <button onClick={() => setIsEditing(true)} className="complete-btn">
-                Mark Complete
-              </button>
-              <button onClick={handleDelete} className="delete-btn">
-                DELETE
-              </button>
-            </div>
-          </>
-        )}
+      <div className="left-panel">
+        <h1>Side Bar</h1>
       </div>
+
+      <div className="right-panel">
+        <h1>{singleTaskObj.name}</h1>
+        <span className="priority-area">{singleTaskObj.priority}</span>
+  
+
+        <div className="task-description">
+          <h3>Task Details:</h3>
+          {singleTaskObj.description}
+        </div>
+
+        <div className="task-buttons">
+          <button type="button" className="update-button" onClick={handleUpdate}>Update</button>
+          <button type="button" className="complete-button" onClick={handleChange}>Mark Completed</button>
+          <button type="button" className="delete-button" onClick={handleDelete}>Delete</button>
+        </div>
+
+      </div>
+
     </div>
-  );
+  )
+      
 };
