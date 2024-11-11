@@ -4,6 +4,7 @@ import { getAllNotebooks } from "../../redux/notebooks";
 import { FaBook } from "react-icons/fa";
 import dummyText from "../../../src/components/Homepage/DummyText";
 import Sidebar from "../Sidebar/Sidebar";
+import "./Homepage.css";
 
 function HomePage() {
   const dispatch = useDispatch();

@@ -6,6 +6,8 @@ import OpenModalButton from "./OpenModalButton";
 import DeleteNotebookConfirmModal from "./DeleteNotebookConfirmModal";
 import EditNotebookModal from "./EditNotebookModal";
 import { FaBook } from "react-icons/fa";
+import "./ManageNotebooksStyles.css";
+
 
 function ManageNotebooks() {
   const dispatch = useDispatch();
