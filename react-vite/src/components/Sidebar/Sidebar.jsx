@@ -2,6 +2,7 @@ import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Homepage from "../../../src/components/Homepage/Homepage.css"
 
+
 function Sidebar(){
     const user = useSelector((store) => store.session.user);
 
