@@ -5,6 +5,7 @@ import NotesPage from '../components/NotesPage/NotesLanding';
 import Layout from './Layout';
 import HomePage from '../components/Homepage/HomePage';
 <<<<<<< HEAD
+<<<<<<< HEAD
 import {CreateTask, TasksList, SingleTaskView} from '../components/Tasks/generalTask';
 =======
 import ManageNotebooks from '../components/Notebooks/ManageNotebooks';
@@ -12,6 +13,10 @@ import CreateNotebookPage from '../components/Notebooks/CreateNotebook';
 
 
 >>>>>>> 104473bc456bd027b0327a3d824e809ed53c267f
+=======
+import UpdateNote from '../components/NotesPage/UpdateNote'
+import CreateNotePage from '../components/NotesPage/CreateNote';
+>>>>>>> dayanz-branch
 
 export const router = createBrowserRouter([
   {
@@ -34,6 +39,7 @@ export const router = createBrowserRouter([
         element: <NotesPage/>,
       },
       {
+<<<<<<< HEAD
         path: 'notebooks/manage',
         element:<ManageNotebooks />,
       },
@@ -59,6 +65,15 @@ export const router = createBrowserRouter([
       {
         path:"tasks/:taskId",
         element: <SingleTaskView />
+=======
+        
+        path: "/notes/:noteId", 
+        element: <UpdateNote />, 
+      },
+      {
+        path: "newnote",
+        element: <CreateNotePage/>,
+>>>>>>> dayanz-branch
       }
     ],
   },

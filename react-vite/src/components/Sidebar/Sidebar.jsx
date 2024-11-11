@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import  "../../../src/components/Sidebar/SidebarStyle.css"
 
 
+
 function Sidebar(){
     const user = useSelector((store) => store.session.user);
 
@@ -17,7 +18,7 @@ function Sidebar(){
             </div>
             <div className="sidebar-btn-area">
             <NavLink to="/notes" title="See Your Notes">Notes</NavLink>
-            <NavLink title="Create a new Note">+</NavLink>
+            <NavLink to="/newnote" title="Create a new Note">+</NavLink>
             </div>
             <div className="sidebar-btn-area">
             <NavLink to="/tasks" title="See Your Tasks">Tasks</NavLink>
