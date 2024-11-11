@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllNotebooks } from "../../redux/notebooks";
-import Homepage from "../../../src/components/Homepage/Homepage.css"
+//import Homepage from "../../../src/components/Homepage/Homepage.css"
 import { FaBook } from "react-icons/fa";
 import dummyText from "../../../src/components/Homepage/DummyText";
 

@@ -1,5 +1,5 @@
-import React from "react";
-import Homepage from "./components/Layout/Homepage.css";
+//import React from "react";
+//import Homepage from "./components/Layout/Homepage.css";
 import { FaBook } from "react-icons/fa";
 import dummyText from "./components/Layout/DummyText";
 
