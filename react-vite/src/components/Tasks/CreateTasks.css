@@ -1,0 +1,209 @@
+/* Main container layout */
+.create-task-container {
+  display: flex;
+  gap: 2rem;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  min-height: 100vh;
+}
+
+/* Left panel styling */
+.left-panel {
+  flex: 1;
+  max-width: 300px;
+}
+
+.side-bar {
+  background-color: #f5f5f5;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.task-preview {
+  background-color: white;
+  padding: 1rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Right panel styling */
+.right-panel {
+  flex: 2;
+  background-color: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.right-panel h2 {
+  margin-bottom: 2rem;
+  color: #333;
+  font-size: 1.5rem;
+}
+
+/* Form styling */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-weight: 500;
+  color: #444;
+}
+
+input[type="text"],
+textarea {
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+
+input[type="text"]:focus,
+textarea:focus {
+  border-color: #2196f3;
+  outline: none;
+}
+
+textarea {
+  min-height: 150px;
+  resize: vertical;
+}
+
+/* Priority section styling */
+.priority-container {
+  margin-top: 1rem;
+}
+
+.priority-options {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.priority-label {
+  flex-direction: row;
+  align-items: center;
+  cursor: pointer;
+}
+
+.priority-label input[type="radio"] {
+  display: none;
+}
+
+.priority-btn {
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+/* Priority button colors */
+.priority-btn.low {
+  background-color: #e3f2fd;
+  color: #1976d2;
+}
+
+.priority-btn.medium {
+  background-color: #fff3e0;
+  color: #f57c00;
+}
+
+.priority-btn.high {
+  background-color: #ffebee;
+  color: #d32f2f;
+}
+
+/* Selected priority button styles */
+input[type="radio"]:checked + .priority-btn.low {
+  background-color: #1976d2;
+  color: white;
+}
+
+input[type="radio"]:checked + .priority-btn.medium {
+  background-color: #f57c00;
+  color: white;
+}
+
+input[type="radio"]:checked + .priority-btn.high {
+  background-color: #d32f2f;
+  color: white;
+}
+
+/* Form action buttons */
+.form-action {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.create_button,
+.cancel_button {
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  border: none;
+}
+
+.create_button {
+  background-color: #2196f3;
+  color: white;
+}
+
+.create_button:hover {
+  background-color: #1976d2;
+}
+
+.cancel_button {
+  background-color: #e0e0e0;
+  color: #333;
+}
+
+.cancel_button:hover {
+  background-color: #bdbdbd;
+}
+
+/* Error styling */
+.error {
+  border-color: #d32f2f !important;
+}
+
+.error-message {
+  color: #d32f2f;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+.error-summary {
+  background-color: #ffebee;
+  padding: 1rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .create-task-container {
+    flex-direction: column;
+    padding: 1rem;
+  }
+
+  .left-panel {
+    max-width: 100%;
+  }
+
+  .priority-options {
+    flex-wrap: wrap;
+  }
+}

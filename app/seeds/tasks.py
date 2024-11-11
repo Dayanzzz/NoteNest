@@ -7,6 +7,7 @@ def seed_tasks():
     task1 = Task(
         name='Complete project report', 
         description='Finish and submit the final project report', 
+        priority ='medium',
         user_id=1,
         created_at=datetime.utcnow(),
         updated_at=datetime.utcnow()
@@ -14,6 +15,7 @@ def seed_tasks():
     task2 = Task(
         name='Team meeting',
         description='Discuss project progress with the team',
+        priority ='high',
         user_id=2,
         created_at=datetime.utcnow(),
         updated_at=datetime.utcnow()
@@ -21,6 +23,7 @@ def seed_tasks():
     task3 = Task(
         name='Client call',
         description='Follow up with the client regarding feedback',
+        priority ='low',
         user_id=3,
         created_at=datetime.utcnow(),
         updated_at=datetime.utcnow()
