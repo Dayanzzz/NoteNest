@@ -4,7 +4,6 @@ import { getAllNotebooks } from "../../redux/notebooks";
 import Sidebar from "../Sidebar/Sidebar";
 import OpenModalButton from "./OpenModalButton";
 import DeleteNotebookConfirmModal from "./DeleteNotebookConfirmModal";
-import ManageNotebooksStyles from "../Notebooks/ManageNotebooksStyles.css";
 import EditNotebookModal from "./EditNotebookModal";
 import { FaBook } from "react-icons/fa";
 

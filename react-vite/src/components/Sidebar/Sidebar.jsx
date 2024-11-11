@@ -1,12 +1,10 @@
 import { NavLink } from 'react-router-dom';
-import { useEffect,useState, useRef } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import  "../../../src/components/Sidebar/SidebarStyle.css"
 
 
 function Sidebar(){
     const user = useSelector((store) => store.session.user);
-    const notebooks = useSelector((state) => state.notebooks.notebooks);
 
     return(
         <div className="sidebar">

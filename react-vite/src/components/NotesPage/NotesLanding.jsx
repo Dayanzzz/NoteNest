@@ -19,11 +19,11 @@ const NotesPage = () => {
 
 
   const handleEdit = (noteId) => {
-    // console.log(`Edit note with id: ${noteId}`);
+    console.log(`Edit note with id: ${noteId}`);
   };
 
   const handleDelete = (noteId) => {
-    // console.log(`Delete note with id: ${noteId}`);
+    console.log(`Delete note with id: ${noteId}`);
   };
 
   return (

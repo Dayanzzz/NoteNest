@@ -9,7 +9,6 @@ const CreateNotebookPage = () => {
   const dispatch = useDispatch();
   const [name, setName] = useState('');
   const [error, setErrors] = useState(null); 
-  let createdNotebook = null;
 
 
     const handleSubmit = async (e) => {
@@ -20,7 +19,7 @@ const CreateNotebookPage = () => {
         };
 
         try {
-            createdNotebook = await dispatch(createNotebook(notebookData));
+            await dispatch(createNotebook(notebookData));
             window.location.href = `/notebooks/manage`;
         } catch (error) {
             setErrors({ submission: "Error when trying to create a review." });
