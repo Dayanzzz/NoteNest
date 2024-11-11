@@ -8,7 +8,6 @@ const dispatch = useDispatch();
   const { closeModal } = useModal();
 
   const handleDelete = (notebookId) => {
-    console.log('Notebook ID: Modal Handle Delete//////', notebookId)
     try {
       dispatch(deleteANotebook(notebookId));
       closeModal();

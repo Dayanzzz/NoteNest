@@ -22,7 +22,6 @@ const CreateNotebookPage = () => {
         try {
             createdNotebook = await dispatch(createNotebook(notebookData));
             window.location.href = `/notebooks/manage`;
-            console.log(createdNotebook.id)
         } catch (error) {
             setErrors({ submission: "Error when trying to create a review." });
         }

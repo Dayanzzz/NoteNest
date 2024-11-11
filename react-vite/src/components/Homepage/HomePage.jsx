@@ -16,8 +16,6 @@ function HomePage() {
 }, [dispatch]);
   // Display up to 8 notebooks
 
-console.log("notebooks:",notebooks);
-
   //Grab Notes from the store
   //display up to 12 notes. Let page scroll
 

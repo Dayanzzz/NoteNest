@@ -68,7 +68,7 @@ export const createNotebook = (addedNotebook) => async (dispatch) => {
 
 /////Update A Notebook THUNK
 export const updateNotebook = (notebookId, notebook) => async (dispatch) => { 
-    console.log("=============THUNK CAKLLL",notebookId, notebook);
+
     try {
         const response = await fetch(`/api/notebooks/${notebookId}`, {
             
@@ -96,7 +96,6 @@ export const getAllNotebooks = () => async (dispatch) => {
     if(response.ok) {
         const data = await response.json();
         dispatch(getNotebooks(data));
-        console.log("data",data)
 
     } else if (response.status < 500) {
         const errorMessages = await response.json();
@@ -112,7 +111,6 @@ export const getAllNotebooks = () => async (dispatch) => {
 
 export const deleteANotebook = (notebookId) => async (dispatch) => {
 
-    console.log("///////////////THUNK notebook ID:",notebookId);
     try {
         const response = await fetch(`/api/notebooks/${notebookId}`, {
             method: "DELETE",

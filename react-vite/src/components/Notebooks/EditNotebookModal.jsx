@@ -11,7 +11,8 @@ function EditNotebookModal({ notebook }) {
     const [name, setName] = useState("")
     const [errors, setErrors] = useState({});
     const { closeModal } = useModal();
-    console.log("PRETHUNK Notebook:", notebook)
+
+
     useEffect(() => {
       if (notebook) {
         setName(notebook.name);
