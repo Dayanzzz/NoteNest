@@ -1,6 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import Homepage from "../../../src/components/Homepage/Homepage.css"
+import  "../../../src/components/Sidebar/SidebarStyle.css"
+
 
 function Sidebar(){
     const user = useSelector((store) => store.session.user);
@@ -11,8 +12,8 @@ function Sidebar(){
                 <h2>{ !user? "Welcome" : `Hi, ${user.username}`}</h2>
             </div>
             <div className="sidebar-btn-area">
-                <NavLink to="/" title="See Your Notebooks">Notebooks</NavLink>
-                <NavLink title="Create a new Notebook">+</NavLink>
+                <NavLink to="/notebooks/manage" title="See Your Notebooks">Notebooks</NavLink>
+                <NavLink to="/notebooks/create" title="Create a new Notebook">+</NavLink>
             </div>
             <div className="sidebar-btn-area">
             <NavLink to="/notes" title="See Your Notes">Notes</NavLink>
