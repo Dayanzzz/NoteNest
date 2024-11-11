@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllNotebooks } from "../../redux/notebooks";
+import {thunkFetchNotes} from "../../redux/notes";
 import Homepage from "../../../src/components/Homepage/Homepage.css"
 import { FaBook } from "react-icons/fa";
 import dummyText from "../../../src/components/Homepage/DummyText";
@@ -10,16 +11,16 @@ function HomePage() {
   const dispatch = useDispatch();
   const user = useSelector((store) => store.session.user);
   const notebooks = useSelector((state) => state.notebooks.notebooks);
-  //Grab the user's Notebooks from the store
+  const notes = useSelector((state) => state.notes.notes);
+
   useEffect(() => { 
     dispatch(getAllNotebooks());
+    dispatch(thunkFetchNotes());
 }, [dispatch]);
-  // Display up to 8 notebooks
+
 
 console.log("notebooks:",notebooks);
 
-  //Grab Notes from the store
-  //display up to 12 notes. Let page scroll
 
   return (
     <div className="page-wrapper">
@@ -40,27 +41,20 @@ console.log("notebooks:",notebooks);
               ))}
               </div>
         </div>
-        <div className="note-area-wrapper">
-          <div className="single-note">
-            <h2 className="note-header">Note Title</h2>
-            <p>{dummyText}</p>
-          </div>
-          <div className="single-note">
-            <h2 className="note-header">Note Title</h2>
-            <p>{dummyText}</p>
-          </div>
-          <div className="single-note">
-            <h2 className="note-header">Note Title</h2>
-            <p>{dummyText}</p>
-          </div>
-          <div className="single-note">
-            <h2 className="note-header">Note Title</h2>
-            <p>{dummyText}</p>
-          </div>
-          <div className="single-note">
-            <h2 className="note-header">Note Title</h2>
-            <p>{dummyText}</p>
-          </div>
+            <div className="note-area-wrapper">
+          <h2 className="recentNotes">Recent Notes</h2>
+          {notes.length > 0 ? (
+            notes.map((note) => (
+              <div className="single-note" key={note.id}>
+                <h2 className="note-header">{note.title}</h2>
+                <p>{note.content || "You haven't added any notes yet. Start by creating one!"}</p>  
+                <p>Tags: {note.tags.join(", ")}</p> 
+                <p>Created on: {new Date(note.created_at).toLocaleDateString()}</p>
+              </div>
+            ))
+          ) : (
+            <p>No notes available</p>
+          )}
         </div>
       </div>
     </div>
