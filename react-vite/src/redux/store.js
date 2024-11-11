@@ -7,20 +7,14 @@ import {
 import thunk from "redux-thunk";
 import sessionReducer from "./session";
 import notebooksReducer from "./notebooks";
-<<<<<<< HEAD
 import tasksReducer from "./tasks";
-=======
 import notesReducer from "./notes";
->>>>>>> origin/dev
 
 const rootReducer = combineReducers({
   session: sessionReducer,
   notebooks: notebooksReducer,
-<<<<<<< HEAD
-  tasks: tasksReducer
-=======
+  tasks: tasksReducer,
   notes: notesReducer
->>>>>>> origin/dev
 });
 
 let enhancer;

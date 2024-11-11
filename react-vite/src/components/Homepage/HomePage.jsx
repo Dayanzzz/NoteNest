@@ -1,36 +1,21 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllNotebooks } from "../../redux/notebooks";
-<<<<<<< HEAD
-=======
-import {thunkFetchNotes} from "../../redux/notes";
-import Homepage from "../../../src/components/Homepage/Homepage.css"
->>>>>>> dayanz-branch
 import { FaBook } from "react-icons/fa";
-import dummyText from "../../../src/components/Homepage/DummyText";
+import { thunkFetchNotes } from "../../redux/notes";
 import Sidebar from "../Sidebar/Sidebar";
 import "./Homepage.css";
 
 function HomePage() {
   const dispatch = useDispatch();
+  const user = useSelector((store)=> store.session.user);
   const notebooks = useSelector((state) => state.notebooks.notebooks);
-<<<<<<< HEAD
-=======
-  const notes = useSelector((state) => state.notes.notes);
->>>>>>> dayanz-branch
+  const notes = useSelector((state)=> state.notes.notes);
 
   useEffect(() => { 
     dispatch(getAllNotebooks());
     dispatch(thunkFetchNotes());
 }, [dispatch]);
-<<<<<<< HEAD
-
-=======
-
-
-console.log("notebooks:",notebooks);
-
->>>>>>> dayanz-branch
 
   return (
     <div className="page-wrapper">

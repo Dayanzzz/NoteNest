@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createATaskThunk, setAllTasksThunk, setOneTaskThunk, deleteATaskThunk } from '../../redux/tasks';
-import { AlertCircle, Edit, Trash2, Plus, Clock, User } from 'lucide-react';
+// import { AlertCircle, Edit, Trash2, Plus, Clock, User } from 'lucide-react';
 import './tasks.css';
 
 // Create Task Component
