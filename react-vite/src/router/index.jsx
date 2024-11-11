@@ -5,14 +5,11 @@ import NotesPage from '../components/NotesPage/NotesLanding';
 import Layout from './Layout';
 import HomePage from '../components/Homepage/HomePage';
 
-<<<<<<< HEAD
-import {CreateTask, TasksList, SingleTaskView} from '../components/Tasks/generalTask';
-=======
+
 import { ViewAllTasks } from '../components/Tasks/ViewAllTasks';
 import { CreateTask } from '../components/Tasks/CreateTasks';
 import { UpdateTask } from '../components/Tasks/UpdateTasks';
 import { SingleTaskDetail } from '../components/Tasks/SingleTaskView';
->>>>>>> blair-branch
 
 import ManageNotebooks from '../components/Notebooks/ManageNotebooks';
 import CreateNotebookPage from '../components/Notebooks/CreateNotebook';
@@ -40,7 +37,6 @@ export const router = createBrowserRouter([
         path:"notes",
         element: <NotesPage/>,
       },
-<<<<<<< HEAD
       {
         path: 'notebooks/manage',
         element:<ManageNotebooks />,
@@ -49,7 +45,6 @@ export const router = createBrowserRouter([
         path: 'notebooks/create',
         element:<CreateNotebookPage />,
       },
-=======
       // {
         
       //   path: '/notes/:noteId/edit', 
@@ -57,7 +52,6 @@ export const router = createBrowserRouter([
       
       // }
       
->>>>>>> blair-branch
       {
         path:"tasks/",
         element: <ViewAllTasks />
@@ -69,8 +63,7 @@ export const router = createBrowserRouter([
       },
       {
         path:"tasks/:taskId",
-<<<<<<< HEAD
-        element: <SingleTaskView />
+        element: <SingleTaskDetail />
       },
       {
         path: "/notes/:noteId", 
@@ -79,13 +72,10 @@ export const router = createBrowserRouter([
       {
         path: "newnote",
         element: <CreateNotePage/>,
-=======
-        element: <SingleTaskDetail />
       },
       {
         path:"tasks/:taskId/edit",
         element: <UpdateTask />
->>>>>>> blair-branch
       }
     ],
   },
