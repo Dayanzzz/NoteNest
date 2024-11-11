@@ -44,11 +44,19 @@ export const ViewAllTasks = () => {
       }
     
   }, [dispatch, sessionUser]);
+  
+  const handleUpdate = async (e, taskId) => {
+    e.preventDefault(); // Prevent the Link navigation
+    e.stopPropagation(); // Stop the event from bubbling up
+    navigate(`/tasks/${taskId}/edit`)
+  }
 
 
 
 
-  const handleDelete = async (taskId) => {
+  const handleDelete = async (e,taskId) => {
+    e. preventDefault(); // Prevent the Link navigation
+    e.stopPropagation(); // Stop the event from bubbling up
     await dispatch(deleteATaskThunk(taskId));
     await dispatch(setAllTasksThunk())
   };
@@ -67,35 +75,34 @@ export const ViewAllTasks = () => {
       </div>
       <div className="tasks-grid">
         {tasks && tasks.length > 0 ? (
-          tasks.map((task, i)=> (
-
-            <Link to={`/tasks/${task.id}`} key={i}>
-
-              <div key={task.id} className="task-card">
-                <h3>{task.name}</h3>
-                <p>{task.description}</p>
-                <div className="task-actions">
+          tasks.map((task, i) => (
+            <div key={i} className="task-card-wrapper">
+              <div className="task-card">
+                <Link to={`/tasks/${task.id}`} className="task-content">
+                  <h3>{task.name}</h3>
+                  <p>{task.description}</p>
+                </Link>
+                <div className="card-footer">
                   <div className="task-date">
-                    {formatDate(task.created_at)}  {/* Changed this line */}
+                    Created: {formatDate(task.created_at)}
                   </div>
                   <div className="action-buttons">
                     <button
                       className="update-btn"
-                      onClick={() => navigate(`/tasks/${task.id}/edit`)}
+                      onClick={(e) => handleUpdate(e, task.id)}
                     >
                       UPDATE
                     </button>
                     <button
                       className="delete-btn"
-                      onClick={() => handleDelete(task.id)}
+                      onClick={(e) => handleDelete(e, task.id)}
                     >
                       DELETE
                     </button>
                   </div>
                 </div>
               </div>
-              
-            </Link>
+            </div>
           ))
         ) : (
           <p>No tasks found. Create a new task to get started!</p>

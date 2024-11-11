@@ -29,30 +29,34 @@
   margin-top: 2rem;
 }
 
-/* Task Card Styles */
-.tasks-grid a {
-  text-decoration: none;
-  color: inherit;
-  display: block;
+/* Task Card Wrapper */
+.task-card-wrapper {
   height: 100%;
 }
 
+/* Task Card Styles */
 .task-card {
   background: white;
   border: 1px solid #e0e0e0;
   border-radius: 8px;
-  padding: 1.5rem;
-  transition: all 0.2s ease;
   height: 100%;
   display: flex;
   flex-direction: column;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.2s ease;
 }
 
 .task-card:hover {
-  transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-color: #2196F3;
+}
+
+/* Task Content (Clickable Area) */
+.task-content {
+  padding: 1.5rem 1.5rem 1rem 1.5rem;
+  text-decoration: none;
+  color: inherit;
+  flex-grow: 1;
+  display: block;
 }
 
 .task-card h3 {
@@ -65,31 +69,31 @@
   color: #666;
   line-height: 1.5;
   margin: 0;
-  flex-grow: 1;
 }
 
-/* Task Actions Section */
-.task-actions {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 1.5rem;
-  padding-top: 1rem;
+/* Card Footer (Date and Buttons) */
+.card-footer {
+  padding: 1rem 1.5rem;
   border-top: 1px solid #eee;
+  background: #fafafa;
+  border-radius: 0 0 8px 8px;
 }
 
+/* Task Date */
 .task-date {
   font-size: 0.875rem;
-  color: #888;
+  color: #666;
+  margin-bottom: 1rem;
 }
 
+/* Action Buttons */
 .action-buttons {
   display: flex;
   gap: 0.75rem;
 }
 
-/* Button Styles */
 .action-buttons button {
+  flex: 1;
   padding: 0.5rem 1rem;
   border: none;
   border-radius: 4px;
@@ -142,47 +146,8 @@
   .tasks-page {
     padding: 1rem;
   }
-
+  
   .tasks-grid {
     grid-template-columns: 1fr;
   }
-
-  .task-actions {
-    flex-direction: column;
-    gap: 1rem;
-    align-items: stretch;
-  }
-
-  .action-buttons {
-    justify-content: stretch;
-  }
-
-  .action-buttons button {
-    flex: 1;
-  }
-}
-
-/* Priority Tags (if needed) */
-.priority-tag {
-  display: inline-block;
-  padding: 0.25rem 0.5rem;
-  border-radius: 4px;
-  font-size: 0.75rem;
-  font-weight: 500;
-  text-transform: uppercase;
-}
-
-.priority-tag.high {
-  background-color: #ffebee;
-  color: #c62828;
-}
-
-.priority-tag.medium {
-  background-color: #fff3e0;
-  color: #ef6c00;
-}
-
-.priority-tag.low {
-  background-color: #e8f5e9;
-  color: #2e7d32;
 }
