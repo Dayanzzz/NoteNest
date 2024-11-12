@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import "./LoginForm.css";
 
+
 function LoginFormModal() {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
@@ -29,17 +30,25 @@ function LoginFormModal() {
   };
 
   //---------------------------add demon user-------------------------
+
   const demoUserLogin = async (e) => {
     e.preventDefault();
-     await dispatch(
+    const serverResponse = await dispatch(
       thunkLogin({
-        email:"demo@aa.io",
-        password:"password",
+        email: "demo@aa.io",
+        password: "password",
       })
-    );
-
-    closeModal();
+    )
+    
+    if (serverResponse) {
+      setErrors(serverResponse);
+    } else {
+      closeModal();
+    }
   };
+
+
+
 
   return (
     <>
