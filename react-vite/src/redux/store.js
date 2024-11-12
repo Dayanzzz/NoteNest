@@ -7,12 +7,14 @@ import {
 import thunk from "redux-thunk";
 import sessionReducer from "./session";
 import notebooksReducer from "./notebooks";
+import tagsReducer from './tags';
 import tasksReducer from "./tasks";
 import notesReducer from "./notes";
 
 const rootReducer = combineReducers({
   session: sessionReducer,
   notebooks: notebooksReducer,
+  tags: tagsReducer,
   tasks: tasksReducer,
   notes: notesReducer
 });

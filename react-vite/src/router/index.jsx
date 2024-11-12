@@ -4,7 +4,7 @@ import SignupFormPage from '../components/SignupFormPage';
 import NotesPage from '../components/NotesPage/NotesLanding';
 import Layout from './Layout';
 import HomePage from '../components/Homepage/HomePage';
-
+import Tags from '../components/Tags/Tags';
 
 import { ViewAllTasks } from '../components/Tasks/ViewAllTasks';
 import { CreateTask } from '../components/Tasks/CreateTasks';
@@ -51,6 +51,10 @@ export const router = createBrowserRouter([
       //   element: <UpdateNote />, 
       
       // }
+      {
+        path: "tags", // <-- Define the route with noteId parameter
+        element: <Tags />,            // <-- Render Tags component on this route
+      },
       
       {
         path:"tasks/",
