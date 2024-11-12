@@ -38,7 +38,7 @@ function HomePage() {
               </div>
         </div>
             <div className="note-area-wrapper">
-          <h2 className="recentNotes">Recent Notes</h2>
+          <h2 className="recentNotes">RECENT NOTES</h2>
           {notes.length > 0 ? (
             notes.map((note) => (
               <div className="single-note" key={note.id}>

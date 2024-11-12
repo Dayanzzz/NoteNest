@@ -9,7 +9,7 @@ import {
   fetchTagsForNoteThunk
 } from '../../redux/tags';
 import { Plus, Trash2 } from 'lucide-react';
-import './tags.css';
+// import './Tags.css';
 
 const Tags = ({ noteId }) => {
     const dispatch = useDispatch();
