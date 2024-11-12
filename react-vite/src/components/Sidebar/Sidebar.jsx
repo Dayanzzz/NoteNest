@@ -1,4 +1,5 @@
 import { NavLink } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import  "../../../src/components/Sidebar/SidebarStyle.css"
 
@@ -6,6 +7,9 @@ import  "../../../src/components/Sidebar/SidebarStyle.css"
 
 function Sidebar(){
     const user = useSelector((store) => store.session.user);
+    const navigate = useNavigate();
+
+    if (!user) navigate(`/login`);
 
     return(
         <div className="sidebar">
