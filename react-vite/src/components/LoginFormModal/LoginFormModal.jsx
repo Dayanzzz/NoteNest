@@ -3,11 +3,12 @@ import { thunkLogin } from "../../redux/session";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import "./LoginForm.css";
+import { AArrowDown } from "lucide-react";
 
 function LoginFormModal() {
   const dispatch = useDispatch();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  let [email, setEmail] = useState("");
+  let [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
 
@@ -18,6 +19,25 @@ function LoginFormModal() {
       thunkLogin({
         email,
         password,
+      })
+    );
+
+    if (serverResponse) {
+      setErrors(serverResponse);
+    } else {
+      closeModal();
+    }
+  };
+
+  const handleDemoSubmit = async (e) => {
+    e.preventDefault();
+    setEmail = "demo@aa.io"
+    setPassword = "password"
+
+    const serverResponse = await dispatch(
+      thunkLogin({
+        email: "demo@aa.io",
+        password: "password",
       })
     );
 
@@ -53,7 +73,8 @@ function LoginFormModal() {
             />
           </label>
           {errors.password && <p>{errors.password}</p>}
-          <button type="submit">Log In</button>
+          <button onClick={handleSubmit}>Log In</button>
+          <button onClick={handleDemoSubmit}>Log In as Demo User</button>
         </form>
      </div>
     </>
