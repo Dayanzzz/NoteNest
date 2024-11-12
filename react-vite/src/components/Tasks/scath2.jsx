@@ -4,7 +4,7 @@ import { setAllTasksThunk, deleteATaskThunk, setOneTaskThunk} from '../../redux/
 // import { AlertCircle, Edit, Trash2, Plus, Clock, User } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router-dom';
 import './SingleTaskView.css';
-
+import Sidebar from '../Sidebar/Sidebar';
 
 
 //! --------------------------------------------------------------------
@@ -33,8 +33,6 @@ export const SingleTaskDetail = () => {
   //! --------------------------------------------------------------------
   //                          Handle Form Submit
   //! --------------------------------------------------------------------
-
- 
 
   useEffect(() => {
     const loadTask = async () => {
@@ -91,9 +89,8 @@ export const SingleTaskDetail = () => {
 
   return (
     <div className="single-task-container">
-      <div className="left-panel">
-        <h1>Side Bar</h1>
-      </div>
+      <Sidebar />
+ 
 
       <div className="right-panel">
         <h1>{singleTaskObj.name}</h1>

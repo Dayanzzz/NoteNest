@@ -22,7 +22,7 @@ function Sidebar(){
             </div>
             <div className="sidebar-btn-area">
             <NavLink to="/tasks" title="See Your Tasks">Tasks</NavLink>
-            <NavLink title="Create a new Task">+</NavLink>
+            <NavLink to="/tasks/new"title="Create a new Task">+</NavLink>
             </div>
             <div className="sidebar-btn-area">
             <NavLink to="/tags" title="See Your Tags">Tags</NavLink>
