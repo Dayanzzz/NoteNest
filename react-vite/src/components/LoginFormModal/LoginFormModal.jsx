@@ -7,8 +7,8 @@ import "./LoginForm.css";
 
 function LoginFormModal() {
   const dispatch = useDispatch();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  let [email, setEmail] = useState("");
+  let [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
 
@@ -31,15 +31,35 @@ function LoginFormModal() {
 
   //---------------------------add demon user-------------------------
 
-  const demoUserLogin = async (e) => {
+  // const demoUserLogin = async (e) => {
+  //   e.preventDefault();
+
+  //   const serverResponse = await dispatch(
+  //     thunkLogin({
+  //       email: "demo@aa.io",
+  //       password: "password",
+  //     })
+  //   )
+    
+  //   if (serverResponse) {
+  //     setErrors(serverResponse);
+  //   } else {
+  //     closeModal();
+  //   }
+  // };
+
+  const handleDemoSubmit = async (e) => {
     e.preventDefault();
+    setEmail = "demo@aa.io"
+    setPassword = "password"
+
     const serverResponse = await dispatch(
       thunkLogin({
         email: "demo@aa.io",
         password: "password",
       })
-    )
-    
+    );
+
     if (serverResponse) {
       setErrors(serverResponse);
     } else {
@@ -76,7 +96,7 @@ function LoginFormModal() {
         {errors.password && <p>{errors.password}</p>}
         <button type="submit">Log In</button>
 
-        <button onClick={demoUserLogin} className="demo-user-button">Demo User</button>
+        <button onClick={handleDemoSubmit}>Log In as Demo User</button>
       </form>
     </>
   );
