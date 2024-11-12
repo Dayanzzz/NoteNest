@@ -29,7 +29,7 @@ def create_task():
     name = data['name'],
     # Default to empty string if not provided
     description = data.get('description',''),
-    priority = data.get('priority', 'low')  # Add this line
+    priority = data.get('priority', 'low'),  # Add this line
   )
 
   db.session.add(task)
