@@ -18,6 +18,10 @@ function HomePage() {
     dispatch(thunkFetchNotes());
 }, [dispatch]);
 
+const sortedNotes = notes
+.sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+.slice(0, 4);
+
   return (
     <div className="page-wrapper">
       <Sidebar />
@@ -39,8 +43,8 @@ function HomePage() {
         </div>
             <div className="note-area-wrapper">
           <h2 className="recentNotes">RECENT NOTES</h2>
-          {notes.length > 0 ? (
-            notes.map((note) => (
+          {sortedNotes.length > 0 ? (
+            sortedNotes.map((note) => (
               <div className="single-note" key={note.id}>
                 <h2 className="note-header">{note.title}</h2>
                 <p>{note.content || "You haven't added any notes yet. Start by creating one!"}</p>  
