@@ -49,10 +49,6 @@ export const router = createBrowserRouter([
         path: "/notebooks/:notebookId",
         element: <ViewNotebookNotes />,
       },
-      {
-        path: "*",
-        element: <HomePage />,
-      }
       // {
         
       //   path: '/notes/:noteId/edit', 
@@ -88,6 +84,10 @@ export const router = createBrowserRouter([
       {
         path:"tasks/:taskId/edit",
         element: <UpdateTask />
+      },
+      {
+        path: "*",
+        element: <HomePage />,
       }
     ],
   },

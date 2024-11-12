@@ -2,21 +2,37 @@ import './ViewNotebookNotesPage.css';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { thunkFetchNotes, thunkDeleteNote } from '../../redux/notes';
+import { getAllNotebooks } from '../../redux/notebooks';
 import Sidebar from '../Sidebar/Sidebar';
-import { useNavigate } from 'react-router-dom';
-import DeleteConfirmationModal from './DeleteNote';
+import { useNavigate, useParams } from 'react-router-dom';
+import DeleteConfirmationModal from '../NotesPage/DeleteNote';
+
 
 function NotesPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate(); 
   const notes = useSelector((state) => state.notes.notes);
-
+  const notebooks = useSelector((state) => state.notebooks.notebooks);
+  const { notebookId } = useParams();
 
   const [showModal, setShowModal] = useState(false);
   const [noteToDelete, setNoteToDelete] = useState(null);
+  
+  console.log("Notes Redux Store;",notes, "////////////////////");
+  console.log("Notebooks Redux Store;",notebooks, "////////////////////");
+
+
+  const thisNotebook = notebooks.find((notebook) => notebook.id == notebookId);
+  const theseNotes = notes.filter((note) => note.notebook_id == notebookId);
+  console.log("thisNotebook: ",thisNotebook.id,"/////////////")
+  console.log("theseNotes: ",theseNotes,"/////////////")
 
   useEffect(() => {
     dispatch(thunkFetchNotes());
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(getAllNotebooks());
   }, [dispatch]);
 
   const handleEdit = (noteId) => {
@@ -44,9 +60,9 @@ function NotesPage() {
       <Sidebar />
 
       <div className="right">
-        <div><h1>Notes</h1></div>
+        <div><h1>Notebook:{ thisNotebook.name ? `  ${thisNotebook.name}`: "Notebook Not Found"} </h1></div>
         <div className="notes-grid">
-          {notes.slice(0, 6).map((note) => (
+          { theseNotes.length == 0 ? <h2>Add notes to your {thisNotebook.name} Notebook to see them here.</h2> : theseNotes.map((note) => (
             <div className="note-card" key={note.id}>
               <h2>{note.title}</h2>
               <p>{note.content}</p>
