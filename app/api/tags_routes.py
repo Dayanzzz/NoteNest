@@ -227,9 +227,6 @@
 #     return jsonify({'message': 'Tag deleted successfully'})
 
 
-
-
-
 from flask import Blueprint, request, jsonify
 from flask_login import login_required, current_user
 from app.models import db, Tag, Note, Notebook  #this is the correct syntax (app.models)
