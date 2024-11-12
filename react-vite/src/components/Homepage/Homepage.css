@@ -64,10 +64,9 @@
     display: flex;
     flex-direction: column;
     min-height: 150px;
-    width: 70%;
+    width: 80%;
     padding-left:49px;
     margin-bottom: 15px;
-
 }
 
 .notebook-header{
@@ -84,7 +83,7 @@
 }
 
 .notebooks-populated-area{
-    width: 80%;
+    width: 100%;
     min-height: 80%;
     display: flex;
     flex-direction: row;
