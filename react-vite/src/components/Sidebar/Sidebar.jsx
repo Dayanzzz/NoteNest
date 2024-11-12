@@ -26,7 +26,7 @@ function Sidebar(){
             </div>
             <div className="sidebar-btn-area">
             <NavLink to="/tags" title="See Your Tags">Tags</NavLink>
-            <NavLink title="Create a new Tag">+</NavLink>
+            <NavLink to="/tags" title="Create a new Tag">+</NavLink>
             </div>
       </div>
     )

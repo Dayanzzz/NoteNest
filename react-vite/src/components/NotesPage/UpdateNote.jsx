@@ -105,12 +105,13 @@ const UpdateNote = () => {
         </div>
         <div className="form-group">
           <label htmlFor="tags">Tags (comma separated):</label>
-          <input
+         
+         <input
             type="text"
             id="tags"
             value={note.tags.join(', ')}  
             onChange={(e) => setNote({ ...note, tags: e.target.value.split(',').map(tag => tag.trim()) })}  
-          />
+          /> 
         </div>
         <div className="updatenotebtn">
         <button className="updateSubmit"type="submit">Update Note</button>

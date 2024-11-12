@@ -248,6 +248,7 @@ def get_tags():
         'note_count': sum(1 for note in tag.notes if note.notebook.owner_id == current_user.id)
     } for tag in tags])
 
+
 @tag_routes.route('', methods=['POST'])
 @login_required
 def create_tag():
@@ -274,6 +275,49 @@ def create_tag():
         'name': tag.name,
         'note_count': 0
     }), 201
+# tag_routes.py
+# @tag_routes.route('', methods=['GET'])  
+# @login_required
+# def get_tags():
+#     # Fetch all tags created by the current user, regardless of note association
+#     tags = Tag.query.filter(Tag.user_id == current_user.id).all()
+
+#     # Prepare response, including the note count for each tag if desired
+#     tag_list = [{
+#         'id': tag.id,
+#         'name': tag.name,
+#         'note_count': sum(1 for note in tag.notes if note.notebook.owner_id == current_user.id)
+#     } for tag in tags]
+
+#     return jsonify(tag_list)
+
+# @tag_routes.route('', methods=['POST'])
+# @login_required
+# def create_tag():
+#     data = request.get_json()
+    
+#     if not data or 'name' not in data:
+#         return jsonify({'error': 'Tag name is required'}), 400
+
+#     # Check if the tag already exists for the current user
+#     existing_tag = Tag.query.filter_by(name=data['name'], user_id=current_user.id).first()
+#     if existing_tag:
+#         return jsonify({
+#             'id': existing_tag.id,
+#             'name': existing_tag.name,
+#             'note_count': len(existing_tag.notes)
+#         })
+
+#     # Create and save new tag with the user association
+#     tag = Tag(name=data['name'], user_id=current_user.id)
+#     db.session.add(tag)
+#     db.session.commit()
+
+#     return jsonify({
+#         'id': tag.id,
+#         'name': tag.name,
+#         'note_count': 0
+#     }), 201
 
 @tag_routes.route('/<int:tag_id>', methods=['DELETE'])
 @login_required

@@ -16,6 +16,7 @@ class User(db.Model, UserMixin):
 
     notebooks = db.relationship('Notebook', back_populates='owner')
     tasks = db.relationship('Task', back_populates='user') 
+    #tags = db.relationship('Tag', back_populates='user', cascade="all, delete-orphan")
 
     @property
     def password(self):

@@ -90,6 +90,36 @@ class Tag(db.Model):
             'name': self.name
         }
 
+# class Tag(db.Model):
+#     __tablename__ = 'tags'
+
+#     if environment == "production":
+#         __table_args__ = {'schema': SCHEMA}
+
+#     id = db.Column(db.Integer, primary_key=True)
+#     name = db.Column(db.String(80), nullable=False)
+#     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)  # Associate tag with user
+
+#     # Define relationships
+#     notes = db.relationship('Note', secondary=note_tags, back_populates='tags')
+#     user = db.relationship('User', back_populates='tags')  # Back-reference to User model
+
+#     # Define composite unique constraint on user_id and name
+#     __table_args__ = (
+#         db.UniqueConstraint('user_id', 'name', name='unique_user_tag'),
+#     )
+
+#     def __repr__(self):
+#         return f"<Tag(id={self.id}, name={self.name}, user_id={self.user_id})>"
+
+#     def to_dict(self):
+#         return {
+#             'id': self.id,
+#             'name': self.name,
+#             'user_id': self.user_id
+#         }
+
+
 class Task(db.Model):
     __tablename__ = 'tasks'
 
