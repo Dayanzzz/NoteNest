@@ -2,6 +2,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllNotebooks } from "../../redux/notebooks";
+import { Link } from 'react-router-dom';
 import { FaBook } from "react-icons/fa";
 import { thunkFetchNotes } from "../../redux/notes";
 import Sidebar from "../Sidebar/Sidebar";
@@ -28,10 +29,12 @@ function HomePage() {
         </div>
         <div className="note-books-area">
             <h1 className="notebook-header">NOTEBOOKS</h1>
-            <div className="notebooks-populated-area">
-              {notebooks.slice(0, 5).map((notebook) => (
+            <div className={ notebooks.length > 4 ? "notebooks-populated-area scroll-bar" : "notebooks-populated-area"}>
+              {notebooks.map((notebook) => (
                 <div className="notebook-instance" key={notebook.id}>
-                  <h1 className="notebook-icon"><FaBook /></h1>
+                  <Link to={`/notebooks/${notebook.id}`}>
+                    <h1 className="notebook-icon"><FaBook /></h1>
+                  </Link>
                   <h3>{notebook.name}</h3>                
                 </div>
               ))}
