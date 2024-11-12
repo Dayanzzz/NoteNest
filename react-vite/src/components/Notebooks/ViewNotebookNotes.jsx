@@ -7,25 +7,17 @@ import Sidebar from '../Sidebar/Sidebar';
 import { useNavigate, useParams } from 'react-router-dom';
 import DeleteConfirmationModal from '../NotesPage/DeleteNote';
 
-
 function NotesPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate(); 
   const notes = useSelector((state) => state.notes.notes);
   const notebooks = useSelector((state) => state.notebooks.notebooks);
   const { notebookId } = useParams();
-
   const [showModal, setShowModal] = useState(false);
   const [noteToDelete, setNoteToDelete] = useState(null);
-  
-  console.log("Notes Redux Store;",notes, "////////////////////");
-  console.log("Notebooks Redux Store;",notebooks, "////////////////////");
-
 
   const thisNotebook = notebooks.find((notebook) => notebook.id == notebookId);
   const theseNotes = notes.filter((note) => note.notebook_id == notebookId);
-  console.log("thisNotebook: ",thisNotebook.id,"/////////////")
-  console.log("theseNotes: ",theseNotes,"/////////////")
 
   useEffect(() => {
     dispatch(thunkFetchNotes());
@@ -54,6 +46,7 @@ function NotesPage() {
   const handleCancelDelete = () => {
     setShowModal(false);  
   };
+
 
   return (
     <div className="page-wrapper">
