@@ -26,29 +26,29 @@ const createNote = (note) => ({
 
 
 export const thunkFetchNotes = () => async (dispatch) => {
-    try {
+    // try {
       const response = await fetch('/api/notes');  
       
       if (response.ok) {
         const data = await response.json();
-        console.log("Fetched Notes:", data);  
+        // console.log("Fetched Notes:", data);  
         dispatch(getNotes(data));  
-      } else if (response.status < 500) {
-        const errorMessages = await response.json();
-        console.error("Error fetching notes:", errorMessages);
-        return errorMessages;
+      // } else if (response.status < 500) {
+      //   const errorMessages = await response.json();
+      //   console.error("Error fetching notes:", errorMessages);
+      //   return errorMessages;
       } else {
         console.error("Server error:", response.status);
         return { server: "Something went wrong. Please try again" };
       }
-    } catch (error) {
-      console.error("Fetch error:", error);
-    }
+    // } catch (error) {
+    //   console.error("Fetch error:", error);
+    // }
   };
 
 
   export const thunkCreateNote = (newNote) => async (dispatch) => {
-    try {
+    // try {
       const response = await fetch('/api/notes', {
         method: 'POST',
         headers: {
@@ -59,26 +59,26 @@ export const thunkFetchNotes = () => async (dispatch) => {
       
       if (response.ok) {
         const createdNote = await response.json();
-        console.log("Created Note:", createdNote);
+        // console.log("Created Note:", createdNote);
         dispatch(createNote(createdNote)); 
-      } else if (response.status < 500) {
-        const errorMessages = await response.json();
-        console.error("Error creating note:", errorMessages);
-        return errorMessages;
+      // } else if (response.status < 500) {
+      //   const errorMessages = await response.json();
+      //   console.error("Error creating note:", errorMessages);
+      //   return errorMessages;
       } else {
         console.error("Server error:", response.status);
         return { server: "Something went wrong. Please try again" };
       }
-    } catch (error) {
-      console.error("Create note error:", error);
-    }
+    // } catch (error) {
+    //   console.error("Create note error:", error);
+    // }
   };
   
 
   // Update an existing note
   export const thunkUpdateNote = (noteId, updatedNote) => async (dispatch) => {
-    try {
-      console.log("Updating note with ID:", noteId);
+    // try {
+    //   console.log("Updating note with ID:", noteId);
       const response = await fetch(`/api/notes/${noteId}`, {
         method: 'PUT',
         headers: {
@@ -97,15 +97,15 @@ export const thunkFetchNotes = () => async (dispatch) => {
     } else {
       console.error('Failed to update note');
     }
-  } catch (err) {
-    console.error('Error updating note:', err);
-  }
+  // } catch (err) {
+  //   console.error('Error updating note:', err);
+  // }
 };
   
 
   // Delete a note
   export const thunkDeleteNote = (noteId) => async (dispatch) => {
-    try {
+    // try {
       const response = await fetch(`/api/notes/${noteId}`, {
         method: 'DELETE',
       });
@@ -113,17 +113,17 @@ export const thunkFetchNotes = () => async (dispatch) => {
       if (response.ok) {
         console.log("Deleted Note:", noteId);
         dispatch(deleteNote(noteId)); 
-      } else if (response.status < 500) {
-        const errorMessages = await response.json();
-        console.error("Error deleting note:", errorMessages);
-        return errorMessages;
+      // } else if (response.status < 500) {
+      //   const errorMessages = await response.json();
+      //   console.error("Error deleting note:", errorMessages);
+      //   return errorMessages;
       } else {
         console.error("Server error:", response.status);
         return { server: "Something went wrong. Please try again" };
       }
-    } catch (error) {
-      console.error("Delete note error:", error);
-    }
+    // } catch (error) {
+    //   console.error("Delete note error:", error);
+    // }
   };
 
 

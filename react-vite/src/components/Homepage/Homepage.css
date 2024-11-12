@@ -64,12 +64,14 @@
     display: flex;
     flex-direction: column;
     min-height: 150px;
-
+    width: 80%;
+    padding-left:49px;
+    margin-bottom: 15px;
 }
 
 .notebook-header{
     font-size: 35px;
-    padding-left: 25px;
+    /* padding-left: 25px; */
     padding-top: 5px;
 }
 
@@ -81,8 +83,17 @@
 }
 
 .notebooks-populated-area{
+    width: 100%;
+    min-height: 80%;
     display: flex;
     flex-direction: row;
+    background-color: rgb(253, 255, 239);
+    border-radius: 15px;
+}
+
+.scroll-bar{
+    overflow-x: scroll;
+    padding-left:20px;
 }
 
 .notebook-instance{
@@ -107,6 +118,7 @@
     flex-direction: column;
     width: 100%;
     height: 80%;
+    margin-top: 55px;
 
 }
 
@@ -126,10 +138,12 @@
 
 .note-header{
     margin: 0px;
-    padding-top: 25px;
+    padding-top: 10px;
     line-height: 18px;
 }
 
 .recentNotes {
     padding-left: 25px;
+
+    text-align: center;
 }

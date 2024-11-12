@@ -15,7 +15,7 @@ import ManageNotebooks from '../components/Notebooks/ManageNotebooks';
 import CreateNotebookPage from '../components/Notebooks/CreateNotebook';
 import UpdateNote from '../components/NotesPage/UpdateNote'
 import CreateNotePage from '../components/NotesPage/CreateNote';
-
+import ViewNotebookNotes from '../components/Notebooks/ViewNotebookNotes';
 
 export const router = createBrowserRouter([
   {
@@ -44,6 +44,10 @@ export const router = createBrowserRouter([
       {
         path: 'notebooks/create',
         element:<CreateNotebookPage />,
+      },
+      {
+        path: "/notebooks/:notebookId",
+        element: <ViewNotebookNotes />,
       },
       // {
         
@@ -80,6 +84,10 @@ export const router = createBrowserRouter([
       {
         path:"tasks/:taskId/edit",
         element: <UpdateTask />
+      },
+      {
+        path: "*",
+        element: <HomePage />,
       }
     ],
   },
