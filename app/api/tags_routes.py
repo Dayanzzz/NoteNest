@@ -3,21 +3,21 @@
 # from flask_login import login_required, current_user
 # from app.models import db, Tag, Note, Notebook
 
-tag_routes = Blueprint('tags', __name__)
+#tag_routes = Blueprint('tags', __name__)
 
 # GET /tags - Get all tags for the current user
-@tag_routes.route('', methods=['GET'])
-@login_required
-def get_tags():
-    # Get all tags associated with the current user's notebooks
-    tags = Tag.query.join(Tag.notes).join(Note.notebook).distinct().all()
+# @tag_routes.route('', methods=['GET'])
+# @login_required
+# def get_tags():
+#     # Get all tags associated with the current user's notebooks
+#     tags = Tag.query.join(Tag.notes).join(Note.notebook).distinct().all()
 
-    # Prepare the response data with note counts for each tag
-    return jsonify([{
-        'id': tag.id,
-        'name': tag.name,
-        'note_count': len([note for note in tag.notes if note.notebook.owner_id == current_user.id])
-    } for tag in tags])
+#     # Prepare the response data with note counts for each tag
+#     return jsonify([{
+#         'id': tag.id,
+#         'name': tag.name,
+#         'note_count': len([note for note in tag.notes if note.notebook.owner_id == current_user.id])
+#     } for tag in tags])
 
 # # POST /tags - Create a new tag
 # @tag_routes.route('/', methods=['POST'])
