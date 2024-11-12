@@ -27,7 +27,20 @@
     justify-content: space-around;
     margin-top: 20px;
   }
- .confirm-del-notebtn,
- .cancel-de-note-btn {
-    width:30%
+ .confirm-del-notebtn{
+  width:40% !important
  }
+ .cancel-de-note-btn {
+  width:40%  !important
+ }
+
+ .bottommodal{
+display: flex;
+justify-content: space-around;
+ }
+ .modal-buttons-deletenote {
+  display: flex;
+  justify-content: space-around;
+
+  margin-top: 20px;
+}
