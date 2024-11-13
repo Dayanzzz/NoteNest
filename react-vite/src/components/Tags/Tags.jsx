@@ -6,66 +6,97 @@ import {
   deleteTagThunk,
   assignTagToNoteThunk,
   removeTagFromNoteThunk,
-  fetchTagsForNoteThunk
+  //fetchTagsForNoteThunk,
+  //setTagsForNote, 
 } from '../../redux/tags';
+import { thunkFetchNotes } from '../../redux/notes';
 import { Plus, Trash2 } from 'lucide-react';
-import '../Tags/Tags';
+import '../Tags/Tags.css';
+import Sidebar from '../Sidebar/Sidebar'; 
 
 const Tags = ({ noteId }) => {
-    const dispatch = useDispatch();
-    const [loading, setLoading] = useState(true);
-    const user = useSelector(state => state.session.user);
-    const allTags = useSelector(state => state.tags.tags);
-    const tagsForNote = useSelector(state => state.tags.tagsForNote[noteId] || []);
-    const [newTagName, setNewTagName] = useState('');
+  const dispatch = useDispatch();
+  const [loading, setLoading] = useState(true);
+  const user = useSelector(state => state.session.user);
+  const allTags = useSelector(state => state.tags.tags);
+  const tagsForNote = useSelector(state => state.tags.tagsForNote[noteId] || []);
+  const allNotes = useSelector(state => state.notes.notes);
+  const [newTagName, setNewTagName] = useState('');
+  const [selectedNoteId, setSelectedNoteId] = useState(null);
+  //const [tagSelectedNote,setTagSelectedNote] = useState(null)
 
-    const isAuthenticated = !!user;
+  const isAuthenticated = !!user;
 
-    useEffect(() => {
-      const loadTags = async () => {
-        if (isAuthenticated) {
-          await dispatch(fetchAllTags());
-          if (noteId) {
-            await dispatch(fetchTagsForNoteThunk(noteId));
-          }
-        }
-        setLoading(false);
-      };
-      loadTags();
-    }, [dispatch, noteId, isAuthenticated]);
+  // console.log("user: ", user);
+  // console.log("All Tags: ", allTags,"//////////////////////");
+  // console.log("All Tags For Note: ", tagsForNote,"//////////////////////");
+  // console.log("All Notes: ", allNotes,"//////////////////////");
 
-    const handleAddTag = async () => {
-      if (newTagName.trim()) {
-        await dispatch(createTagThunk(newTagName));
-        setNewTagName('');
+
+  useEffect(() => {
+    const loadTagsAndNotes = async () => {
+      if (isAuthenticated) {
+        await dispatch(thunkFetchNotes()); // Fetch all notes for dropdown
+        await dispatch(fetchAllTags());
+        // if (noteId) {
+        //   await dispatch(fetchTagsForNoteThunk(noteId));
+        // }
       }
+      setLoading(false);
     };
+    loadTagsAndNotes();
+  }, [dispatch, noteId]); 
 
-    const handleDeleteTag = async (tagId) => {
-      await dispatch(deleteTagThunk(tagId));
-    };
+  
 
-    const handleAssignTagToNote = async (tagId) => {
-      if (noteId) {
-        await dispatch(assignTagToNoteThunk(noteId, tagId));
-      }
-    };
+  const handleAddTag = async () => {
+    // if (newTagName) {
+      const newTag = await dispatch(createTagThunk(newTagName.trim())); // Create the tag
+      // if (selectedNoteId || noteId) {
+      //   const noteToLink = selectedNoteId || noteId;
+      //   console.log("Selected Note ID:",selectedNoteId, "//////////////")
+      //   console.log("New Tag:",newTag, "//////////////")
+      //   await dispatch(assignTagToNoteThunk(noteToLink, newTag.id)); // Assign it to the note
+        // Update the state for the note and refresh tags for the note
+        // dispatch(setTagsForNote(noteToLink, [...tagsForNote, { id: newTag.id, name: newTag.name }]));
 
-    const handleRemoveTagFromNote = async (tagId) => {
-      if (noteId) {
-        await dispatch(removeTagFromNoteThunk(noteId, tagId));
-      }
-    };
+        //will need selectedNoteID = note_id and newTag.id = tag_id to link the tag to the note
+      await dispatch(assignTagToNoteThunk(selectedNoteId, newTag.id));      
+      // setNewTagName(''); // Clear input after creation
+    // }
+  };
 
-    if (loading) {
-      return <div>Loading tags...</div>;
+  const handleAssignTagToNote = async (noteId, tagId) => {
+    // if (noteId) {
+      await dispatch(assignTagToNoteThunk(noteId, tagId)); 
+      // Update the tags for the note immediately
+      // const tag = allTags.find(tag => tag.id === tagId);
+      // dispatch(setTagsForNote(noteId, [...tagsForNote, tag])); // Add the tag to the note's tags
+    // }
+  };
+
+  const handleDeleteTag = async (tagId) => {
+    await dispatch(deleteTagThunk(tagId));
+    await dispatch(fetchAllTags);
+  };
+
+  const handleRemoveTagFromNote = async (tagId) => {
+    if (noteId) {
+      await dispatch(removeTagFromNoteThunk(noteId, tagId));
     }
+  };
 
-    if (!isAuthenticated) {
-      return <div>Please log in to manage tags.</div>;
-    }
+  if (loading) {
+    return <div>Loading tags...</div>;
+  }
 
-    return (
+  if (!isAuthenticated) {
+    return <div>Please log in to manage tags.</div>;
+  }
+
+  return (
+    <div className="Tags-wrapper">
+      <Sidebar />
       <div className="tags-container">
         <h2>Tags</h2>
         <div className="tag-create">
@@ -76,168 +107,48 @@ const Tags = ({ noteId }) => {
             placeholder="New tag name"
             maxLength={50}
           />
+          <select value={selectedNoteId} onChange={(e) => setSelectedNoteId(e.target.value)}>
+            <option value="">Select Note to Link</option>
+            {allNotes.map(note => (
+              <option key={note.id} value={note.id}>{note.title}</option>
+            ))}
+          </select>
           <button onClick={handleAddTag} className="btn-primary">
             <Plus className="icon-small" /> Add Tag
           </button>
         </div>
-
-        <div className="all-tags">
-          <h3>All Tags</h3>
-          <ul>
-            {allTags.map(tag => (
-              <li key={tag.id} className="tag-item">
-                <span>{tag.name}</span>
-                <button onClick={() => handleDeleteTag(tag.id)} className="btn-icon delete">
-                  <Trash2 className="icon-small" />
-                </button>
-                {noteId && !tagsForNote.includes(tag.id) && (
-                  <button onClick={() => handleAssignTagToNote(tag.id)} className="btn-assign">
-                    Assign to Note
-                  </button>
-                )}
-              </li>
+        <div className="tags-list">
+          {/* {console.log("All Tags in Tags List", allTags)} */}
+          {allTags.map((tag) => (
+            <div key={tag.id} className="tag-item">
+              <span>{tag.name}</span>
+              <button onClick={() => handleDeleteTag(tag.id)} className="btn-icon">
+                <Trash2 className="icon-small" />
+              </button>
+              <select value={selectedNoteId} onChange={(e) => setSelectedNoteId(e.target.value)}>
+            <option value="">Select Note to Link</option>
+            {allNotes.map(note => (
+              <option key={note.id} value={note.id}>{note.title}</option>
             ))}
-          </ul>
+          </select>
+              {tagsForNote.includes(tag.id) ? (
+                <button onClick={() => handleRemoveTagFromNote(tag.id)} className="btn-secondary">
+                  Remove from Note
+                </button>
+              ) : (
+                <button onClick={() => handleAssignTagToNote(selectedNoteId, tag.id)} className="btn-secondary">
+                  Assign to Note
+                </button>
+              )}
+            </div>
+          ))}
         </div>
-
-        {noteId && (
-          <div className="note-tags">
-            <h3>Tags for this Note</h3>
-            <ul>
-              {tagsForNote.map(tagId => {
-                const tag = allTags.find(tag => tag.id === tagId);
-                return (
-                  <li key={tagId} className="note-tag-item">
-                    <span>{tag?.name || 'Unknown Tag'}</span>
-                    <button onClick={() => handleRemoveTagFromNote(tagId)} className="btn-icon delete">
-                      <Trash2 className="icon-small" />
-                    </button>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
-        )}
       </div>
-    );
+    </div>
+  );
 };
 
 export default Tags;
 
 
-// import { useEffect, useState } from 'react';
-// import { useDispatch, useSelector } from 'react-redux';
-// import {
-//   fetchAllTags,
-//   createTagThunk,
-//   deleteTagThunk,
-//   assignTagToNoteThunk,
-//   removeTagFromNoteThunk,
-//   fetchTagsForNoteThunk
-// } from '../../redux/tags';
-// import { Plus, Trash2 } from 'lucide-react';
-// import './tags.css';
 
-// const Tags = ({ noteId }) => {
-//   const dispatch = useDispatch();
-//   const [loading, setLoading] = useState(true);
-//   const allTags = useSelector(state => state.tags.allTags);   //? Object.values(state.tags.allTags) : []);
-//   const tagsForNote = useSelector(state => state.tags.tagsForNote[noteId] || []);
-//   const [newTagName, setNewTagName] = useState('');
-
-//   useEffect(() => {
-//     const loadTags = async () => {
-//       await dispatch(fetchAllTags());
-//       setLoading(false); // Set loading to false once fetch is complete
-//       if (noteId) {
-//         await dispatch(fetchTagsForNoteThunk(noteId));
-//       }
-//     };
-//     loadTags();
-//   }, [dispatch, noteId]);
-
-//   const handleAddTag = async () => {
-//     if (newTagName.trim()) {
-//       await dispatch(createTagThunk(newTagName));
-//       setNewTagName('');
-//     }
-//   };
-
-//   const handleDeleteTag = async (tagId) => {
-//     await dispatch(deleteTagThunk(tagId));
-//   };
-
-//   const handleAssignTagToNote = async (tagId) => {
-//     await dispatch(assignTagToNoteThunk(noteId, tagId));
-//   };
-
-//   const handleRemoveTagFromNote = async (tagId) => {
-//     await dispatch(removeTagFromNoteThunk(noteId, tagId));
-//   };
-
-//   if (loading) {
-//     return <div>Loading tags...</div>;
-//   }
-
-//   return (
-//     <div className="tags-container">
-//       <h2>Tags</h2>
-
-//       {/* Tag Creation */}
-//       <div className="tag-create">
-//         <input
-//           type="text"
-//           value={newTagName}
-//           onChange={(e) => setNewTagName(e.target.value)}
-//           placeholder="New tag name"
-//           maxLength={50}
-//         />
-//         <button onClick={handleAddTag} className="btn-primary">
-//           <Plus className="icon-small" /> Add Tag
-//         </button>
-//       </div>
-
-//       {/* Tag List */}
-//       <div className="all-tags">
-//         <h3>All Tags</h3>
-//         <ul>
-//           {allTags.map(tag => (
-//             <li key={tag.id} className="tag-item">
-//               <span>{tag.name}</span>
-//               <button onClick={() => handleDeleteTag(tag.id)} className="btn-icon delete">
-//                 <Trash2 className="icon-small" />
-//               </button>
-//               {noteId && !tagsForNote.includes(tag.id) && (
-//                 <button onClick={() => handleAssignTagToNote(tag.id)} className="btn-assign">
-//                   Assign to Note
-//                 </button>
-//               )}
-//             </li>
-//           ))}
-//         </ul>
-//       </div>
-
-//       {/* Tags Associated with the Current Note */}
-//       {noteId && (
-//         <div className="note-tags">
-//           <h3>Tags for this Note</h3>
-//           <ul>
-//             {tagsForNote.map(tagId => {
-//               const tag = allTags.find(tag => tag.id === tagId);
-//               return (
-//                 <li key={tagId} className="note-tag-item">
-//                   <span>{tag?.name || 'Unknown Tag'}</span>
-//                   <button onClick={() => handleRemoveTagFromNote(tagId)} className="btn-icon delete">
-//                     <Trash2 className="icon-small" />
-//                   </button>
-//                 </li>
-//               );
-//             })}
-//           </ul>
-//         </div>
-//       )}
-//     </div>
-//   );
-// };
-
-// export default Tags;
