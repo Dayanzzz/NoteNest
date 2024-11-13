@@ -138,7 +138,7 @@ const Tags = ({ noteId }) => {
               ) : (
                 <button onClick={() => handleAssignTagToNote(selectedNoteId, tag.id)} className="btn-secondary">
                   Assign to Note
-                </button>
+              </button>
               )}
             </div>
           ))}

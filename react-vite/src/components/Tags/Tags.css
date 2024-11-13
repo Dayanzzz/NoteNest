@@ -16,7 +16,8 @@
   
   .tags-container {
     width: 100%;
-    max-width: 600px;
+    max-width: 1000px;
+    min-width: 1000px;
     margin: 0 auto;
     padding: 20px;
     background-color: #f9f9f9;
@@ -45,6 +46,8 @@
     font-size: 1rem;
     border: 1px solid #ccc;
     border-radius: 4px;
+    max-width: 200px;
+    min-width: 200px;
   }
   
   .tag-create select {
@@ -62,7 +65,7 @@
     padding: 8px 12px;
     font-size: 1rem;
     color: #fff;
-    background-color: #9d3e46;
+    background-color: #98665f;
     border: none;
     border-radius: 4px;
     cursor: pointer;
@@ -74,7 +77,7 @@
   }
   
   .btn-primary:hover {
-    background-color: #9d3e46;
+    background-color: #468c60;
   }
   
   .tags-list {
@@ -107,14 +110,14 @@
   }
   
   .btn-icon:hover {
-    color: #e74c3c;
+    color: #a00303;
   }
   
   .btn-secondary {
     padding: 5px 10px;
     font-size: 0.9rem;
     color: #fff;
-    background-color: #db3434;
+    background-color: #b78c64;
     border: none;
     border-radius: 4px;
     cursor: pointer;
@@ -122,7 +125,7 @@
   }
   
   .btn-secondary:hover {
-    background-color: #db3434;
+    background-color: #63a867;
   }
   
   .btn-secondary-remove {
