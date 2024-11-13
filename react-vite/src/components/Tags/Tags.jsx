@@ -11,7 +11,7 @@ import {
 } from '../../redux/tags';
 import { thunkFetchNotes } from '../../redux/notes';
 import { Plus, Trash2 } from 'lucide-react';
-import './tags.css';
+import '../Tags/Tags.css';
 import Sidebar from '../Sidebar/Sidebar'; 
 
 const Tags = ({ noteId }) => {
@@ -22,54 +22,57 @@ const Tags = ({ noteId }) => {
   const tagsForNote = useSelector(state => state.tags.tagsForNote[noteId] || []);
   const allNotes = useSelector(state => state.notes.notes);
   const [newTagName, setNewTagName] = useState('');
-  const [selectedNoteId, setSelectedNoteId] = useState('');
+  const [selectedNoteId, setSelectedNoteId] = useState(null);
+  const [tagSelectedNote,setTagSelectedNote] = useState(null)
 
   const isAuthenticated = !!user;
+
+  // console.log("user: ", user);
+  // console.log("All Tags: ", allTags,"//////////////////////");
+  // console.log("All Tags For Note: ", tagsForNote,"//////////////////////");
+  // console.log("All Notes: ", allNotes,"//////////////////////");
+
 
   useEffect(() => {
     const loadTagsAndNotes = async () => {
       if (isAuthenticated) {
-        await dispatch(fetchAllTags());
         await dispatch(thunkFetchNotes()); // Fetch all notes for dropdown
-        if (noteId) {
-          await dispatch(fetchTagsForNoteThunk(noteId));
-        }
+        await dispatch(fetchAllTags());
+        // if (noteId) {
+        //   await dispatch(fetchTagsForNoteThunk(noteId));
+        // }
       }
       setLoading(false);
     };
     loadTagsAndNotes();
-  }, [dispatch, noteId, isAuthenticated]);
+  }, [dispatch, noteId]); 
 
   
 
   const handleAddTag = async () => {
-    if (newTagName.trim()) {
-      const newTag = await dispatch(createTagThunk(newTagName)); // Create the tag
-      if (selectedNoteId || noteId) {
-        const noteToLink = selectedNoteId || noteId;
-        await dispatch(assignTagToNoteThunk(noteToLink, newTag.id)); // Assign it to the note
-
+    // if (newTagName) {
+      const newTag = await dispatch(createTagThunk(newTagName.trim())); // Create the tag
+      // if (selectedNoteId || noteId) {
+      //   const noteToLink = selectedNoteId || noteId;
+      //   console.log("Selected Note ID:",selectedNoteId, "//////////////")
+      //   console.log("New Tag:",newTag, "//////////////")
+      //   await dispatch(assignTagToNoteThunk(noteToLink, newTag.id)); // Assign it to the note
         // Update the state for the note and refresh tags for the note
-        dispatch(setTagsForNote(noteToLink, [...tagsForNote, { id: newTag.id, name: newTag.name }]));
-      }
-      setNewTagName(''); // Clear input after creation
-    }
+        // dispatch(setTagsForNote(noteToLink, [...tagsForNote, { id: newTag.id, name: newTag.name }]));
+
+        //will need selectedNoteID = note_id and newTag.id = tag_id to link the tag to the note
+      await dispatch(assignTagToNoteThunk(selectedNoteId, newTag.id));      
+      // setNewTagName(''); // Clear input after creation
+    // }
   };
 
-
-
-
-
-
-
-  const handleAssignTagToNote = async (tagId) => {
-    if (noteId) {
-      await dispatch(assignTagToNoteThunk(noteId, tagId)); // Assign tag to the note
-
+  const handleAssignTagToNote = async (noteId, tagId) => {
+    // if (noteId) {
+      await dispatch(assignTagToNoteThunk(noteId, tagId)); 
       // Update the tags for the note immediately
-      const tag = allTags.find(tag => tag.id === tagId);
-      dispatch(setTagsForNote(noteId, [...tagsForNote, tag])); // Add the tag to the note's tags
-    }
+      // const tag = allTags.find(tag => tag.id === tagId);
+      // dispatch(setTagsForNote(noteId, [...tagsForNote, tag])); // Add the tag to the note's tags
+    // }
   };
 
   const handleDeleteTag = async (tagId) => {
@@ -114,18 +117,25 @@ const Tags = ({ noteId }) => {
           </button>
         </div>
         <div className="tags-list">
+          {/* {console.log("All Tags in Tags List", allTags)} */}
           {allTags.map((tag) => (
             <div key={tag.id} className="tag-item">
               <span>{tag.name}</span>
               <button onClick={() => handleDeleteTag(tag.id)} className="btn-icon">
                 <Trash2 className="icon-small" />
               </button>
+              <select value={selectedNoteId} onChange={(e) => setSelectedNoteId(e.target.value)}>
+            <option value="">Select Note to Link</option>
+            {allNotes.map(note => (
+              <option key={note.id} value={note.id}>{note.title}</option>
+            ))}
+          </select>
               {tagsForNote.includes(tag.id) ? (
                 <button onClick={() => handleRemoveTagFromNote(tag.id)} className="btn-secondary">
                   Remove from Note
                 </button>
               ) : (
-                <button onClick={() => handleAssignTagToNote(tag.id)} className="btn-secondary">
+                <button onClick={() => handleAssignTagToNote(selectedNoteId, tag.id)} className="btn-secondary">
                   Assign to Note
                 </button>
               )}

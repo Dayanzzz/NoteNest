@@ -189,3 +189,22 @@ def delete_note(note_id):
         print(f"Error deleting note: {e}")
         db.session.rollback() 
         return jsonify({'message': 'Internal server error'}), 500
+    
+#Add a Tag to a Note:
+@note_routes.route('/<int:note_id>/tags/<int:tag_id>', methods=['POST'])
+@login_required
+def assign_tag_to_note(note_id, tag_id):
+   
+    note = Note.query.get(note_id)
+    tag = Tag.query.get(tag_id)
+    
+    if not note or not tag:
+        return jsonify({"error": "Note or tag not found"}), 404
+    
+    if tag in note.tags:
+        return jsonify({"message": "Tag is already associated with this note"}), 400
+
+    note.tags.append(tag)
+    db.session.commit()
+
+    return jsonify({"message": "Tag added to note successfully"}), 200

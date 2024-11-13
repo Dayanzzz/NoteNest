@@ -24,8 +24,7 @@ export const deleteTag = (tagId) => ({
 
 export const assignTagToNote = (noteId, tag) => ({
   type: ASSIGN_TAG_TO_NOTE,
-  noteId,
-  tag, // Include the full tag object with id and name
+  payload: {noteId, tag}
 });
 
 export const removeTagFromNote = (noteId, tagId) => ({
@@ -42,7 +41,8 @@ export const setTagsForNote = (noteId, tags) => ({
 
 // Thunks
 export const fetchAllTags = () => async (dispatch) => {
-  const response = await fetch("/api/tags", { credentials: "include" });
+  const response = await fetch("/api/tags");   
+  // removed , { credentials: "include" } from response call
   if (response.ok) {
     const data = await response.json();
     dispatch(setTags(data));
@@ -84,8 +84,9 @@ export const deleteTagThunk = (tagId) => async (dispatch) => {
   }
 };
 
-export const assignTagToNoteThunk = (noteId, tagId) => async (dispatch, getState) => {
-  const response = await fetch("/api/note_tags", {
+export const assignTagToNoteThunk = (noteId, tagId) => async (dispatch) => {
+  console.log("Entered Thunk Call: ",noteId,tagId, "/////////////")
+  const response = await fetch(`/api/notes/${noteId}/tags/${tagId}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ note_id: noteId, tag_id: tagId }),
@@ -93,13 +94,26 @@ export const assignTagToNoteThunk = (noteId, tagId) => async (dispatch, getState
   });
 
   if (response.ok) {
-    const state = getState(); // Get current state
-    const tag = state.tags.tags.find(tag => tag.id === tagId); // Find full tag by ID
-    dispatch(assignTagToNote(noteId, tag)); // Add the full tag (with name and id) to the note
+    const data = await response.json();
+    console.log("Resonse from assign Tag Thunk //////////",data)
+    const tag = data.tag;
+    dispatch(assignTagToNote(noteId, tag))
+    return data;
   } else {
-    console.error("Error assigning tag to note");
+    
+    const errorData = await response.json();
+    throw new Error(errorData.error || "An error occurred while assigning the tag to the note.");
   }
 };
+
+//   if (response.ok) {
+//     const state = getState(); // Get current state
+//     const tag = state.tags.tags.find(tag => tag.id === tagId); // Find full tag by ID
+//     dispatch(assignTagToNote(noteId, tag)); // Add the full tag (with name and id) to the note
+//   } else {
+//     console.error("Error assigning tag to note");
+//   }
+// };
 
 export const removeTagFromNoteThunk = (noteId, tagId) => async (dispatch) => {
   const response = await fetch("/api/note_tags", {
@@ -156,7 +170,7 @@ const tagsReducer = (state = initialState, action) => {
       };
 
     case ASSIGN_TAG_TO_NOTE: {
-      const { noteId, tag } = action;
+      const { noteId, tag } = action.payload;
       const tagsForNote = state.tagsForNote[noteId] || [];
       return {
         ...state,
