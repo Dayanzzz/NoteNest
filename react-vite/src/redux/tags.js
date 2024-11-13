@@ -85,7 +85,7 @@ export const deleteTagThunk = (tagId) => async (dispatch) => {
 };
 
 export const assignTagToNoteThunk = (noteId, tagId) => async (dispatch) => {
-  console.log("Entered Thunk Call: ",noteId,tagId, "/////////////")
+
   const response = await fetch(`/api/notes/${noteId}/tags/${tagId}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -95,7 +95,7 @@ export const assignTagToNoteThunk = (noteId, tagId) => async (dispatch) => {
 
   if (response.ok) {
     const data = await response.json();
-    console.log("Resonse from assign Tag Thunk //////////",data)
+
     const tag = data.tag;
     dispatch(assignTagToNote(noteId, tag))
     return data;
