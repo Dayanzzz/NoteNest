@@ -5,6 +5,8 @@ import { thunkFetchNotes, thunkDeleteNote } from '../../redux/notes';
 import Sidebar from '../Sidebar/Sidebar';
 import { useNavigate } from 'react-router-dom';
 import DeleteConfirmationModal from './DeleteNote';
+//import { fetchAllTags } from '../../redux/tags';
+//import { fetchTagsForNoteThunk } from '../../redux/tags';
 
 function NotesPage() {
   const dispatch = useDispatch();
@@ -17,6 +19,7 @@ function NotesPage() {
 
   useEffect(() => {
     dispatch(thunkFetchNotes());
+    //dispatch(fetchTagsForNoteThunk());
   }, [dispatch]);
 
   const handleEdit = (noteId) => {

@@ -48,18 +48,13 @@ const Tags = ({ noteId }) => {
       if (selectedNoteId || noteId) {
         const noteToLink = selectedNoteId || noteId;
         await dispatch(assignTagToNoteThunk(noteToLink, newTag.id)); // Assign it to the note
-
         // Update the state for the note and refresh tags for the note
         dispatch(setTagsForNote(noteToLink, [...tagsForNote, { id: newTag.id, name: newTag.name }]));
+        dispatch(fetchTagsForNoteThunk(noteId));
       }
       setNewTagName(''); // Clear input after creation
     }
   };
-
-
-
-
-
 
 
   const handleAssignTagToNote = async (tagId) => {
@@ -74,6 +69,7 @@ const Tags = ({ noteId }) => {
 
   const handleDeleteTag = async (tagId) => {
     await dispatch(deleteTagThunk(tagId));
+    await dispatch(fetchAllTags);
   };
 
   const handleRemoveTagFromNote = async (tagId) => {

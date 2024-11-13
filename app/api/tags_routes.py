@@ -327,8 +327,8 @@ def delete_tag(tag_id):
         note.tags.remove(tag)
 
     # Delete the tag only if it's no longer associated with any notes
-    if not tag.notes:
-        db.session.delete(tag)
+    # if not tag.notes:
+    #     db.session.delete(tag)
 
     db.session.commit()
     return jsonify({'message': 'Tag deleted successfully'})

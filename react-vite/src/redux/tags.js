@@ -66,6 +66,7 @@ export const createTagThunk = (name) => async (dispatch) => {
     const data = await response.json();
     dispatch(addTag(data));
     return data; // Return created tag to get ID
+    
   } else {
     console.error("Error creating tag", response);
   }
