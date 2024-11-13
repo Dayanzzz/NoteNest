@@ -236,13 +236,13 @@ tag_routes = Blueprint('tags', __name__)
 @tag_routes.route('', methods=['GET'])  
 @login_required
 def get_tags():
-    tags = Tag.query.join(Tag.notes).join(Note.notebook).filter(
-        Notebook.owner_id == current_user.id
-    ).distinct().all()
+    tags = Tag.query.all() 
+                # Removed from tags query call .join(Tag.notes).join(Note.notebook)
+                #Removed this from query call - .filter(Notebook.owner_id == current_user.id).distinct()
     return jsonify([{
         'id': tag.id,
         'name': tag.name,
-        'note_count': sum(1 for note in tag.notes if note.notebook.owner_id == current_user.id)
+        #'note_count': sum(1 for note in tag.notes if note.notebook.owner_id == current_user.id)
     } for tag in tags])
 
 
@@ -272,6 +272,7 @@ def create_tag():
         'name': tag.name,
         'note_count': 0
     }), 201
+
 # tag_routes.py
 # @tag_routes.route('', methods=['GET'])  
 # @login_required
@@ -319,16 +320,20 @@ def create_tag():
 @tag_routes.route('/<int:tag_id>', methods=['DELETE'])
 @login_required
 def delete_tag(tag_id):
+    # I commented all this out
     tag = Tag.query.get_or_404(tag_id)
-    
-    # Remove tag only from the current user's notes
-    user_notes_with_tag = [note for note in tag.notes if note.notebook.owner_id == current_user.id]
-    for note in user_notes_with_tag:
-        note.tags.remove(tag)
-
-    # Delete the tag only if it's no longer associated with any notes
-    # if not tag.notes:
-    #     db.session.delete(tag)
-
+    db.session.delete(tag)
     db.session.commit()
-    return jsonify({'message': 'Tag deleted successfully'})
+    return jsonify({'message': 'Tag deleted successfully'}), 204
+    
+    # # Remove tag only from the current user's notes
+    # user_notes_with_tag = [note for note in tag.notes if note.notebook.owner_id == current_user.id]
+    # for note in user_notes_with_tag:
+    #     note.tags.remove(tag)
+
+    # # Delete the tag only if it's no longer associated with any notes
+    # if not tag.notes:
+        # db.session.delete(tag)
+        # db.session.commit()
+        # return jsonify({'message': 'Tag deleted successfully'}), 204
+    
