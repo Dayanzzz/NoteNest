@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from 'react-router-dom';
 import { getAllNotebooks } from "../../redux/notebooks";
 import Sidebar from "../Sidebar/Sidebar";
 import OpenModalButton from "./OpenModalButton";
@@ -28,7 +29,9 @@ function ManageNotebooks() {
             <div className="notebooks-page-populated-area">
               {notebooks.map((notebook) => (
                 <div className="notebook-instance" key={notebook.id}>
-                  <h1 className="notebook-icon"><FaBook /></h1>
+                  <Link to={`/notebooks/${notebook.id}`}>
+                    <h1 className="notebook-icon"><FaBook /></h1>
+                  </Link>
                   <div className="manage-notebook-title">
                     <h3>{notebook.name}</h3>
                   </div>

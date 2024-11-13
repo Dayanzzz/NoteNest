@@ -4,7 +4,7 @@ import { setAllTasksThunk, deleteATaskThunk, setOneTaskThunk} from '../../redux/
 // import { AlertCircle, Edit, Trash2, Plus, Clock, User } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router-dom';
 import './SingleTaskView.css';
-
+import Sidebar from '../Sidebar/Sidebar';
 
 
 //! --------------------------------------------------------------------
@@ -89,29 +89,31 @@ export const SingleTaskDetail = () => {
 
   return (
     <div className="single-task-container">
-      <div className="left-panel">
-        <h1>Side Bar</h1>
-      </div>
-
+      <Sidebar />
       <div className="right-panel">
-        <h1>{singleTaskObj.name}</h1>
-        <span className="priority-area">{singleTaskObj.priority}</span>
-  
-
+        <h1>{singleTaskObj.name || 'TASK Name HERE'}</h1>
+        
+        <span 
+          className="priority-area" 
+          data-priority={singleTaskObj.priority?.toLowerCase()}
+        >
+          {singleTaskObj.priority || 'Priority'}
+        </span>
+        
         <div className="task-description">
           <h3>Task Details:</h3>
-          {singleTaskObj.description}
+          <p>{singleTaskObj.description || 'Task details will appear here.'}</p>
         </div>
-
+        
         <div className="task-buttons">
-          <button type="button" className="update-button" onClick={handleUpdate}>Update</button>
-          <button type="button" className="complete-button" onClick={handleChange}>Mark Completed</button>
-          <button type="button" className="delete-button" onClick={handleDelete}>Delete</button>
+          <button type="button" className="update-button" onClick={handleUpdate}>UPDATE</button>
+
+          <button type="button" className="complete-button" onClick={handleChange}>Mark Complete</button>
+          <button type="button" className="delete-button" onClick={handleDelete}>DELETE</button>
         </div>
-
+        
       </div>
-
     </div>
-  )
+  );
       
 };

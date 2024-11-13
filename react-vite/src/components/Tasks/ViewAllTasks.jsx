@@ -1,8 +1,11 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setAllTasksThunk, deleteATaskThunk } from '../../redux/tasks';
 import { useNavigate, Link } from 'react-router-dom';
+import Sidebar from '../Sidebar/Sidebar';
 import './tasks.css';
+import DeleteConfirmationModal from './DeleteTask'
+
 
 export const ViewAllTasks = () => {
   const dispatch = useDispatch();
@@ -12,7 +15,11 @@ export const ViewAllTasks = () => {
   const tasksObj = useSelector(state => state.tasks.allTasks);
 
 
-   // Add formatDate function
+  const [showModal, setShowModal] = useState(false);
+  const [taskToDelete, setTaskToDelete] = useState(null);
+
+
+   // --------------------------------------Add formatDate function
    const formatDate = (dateString) => {
     if (!dateString) return '';
     const date = new Date(dateString);
@@ -27,12 +34,12 @@ export const ViewAllTasks = () => {
       year: 'numeric'
     });
   };
+  // ---------------------------------------Add formatDate function
 
   // Convert tasks object to array and filter for current user
   const tasks = Object.values(tasksObj || {}).filter(task =>
     task && task.user_id === sessionUser?.id
   );
-
 
 
   useEffect(() => {
@@ -54,25 +61,52 @@ export const ViewAllTasks = () => {
 
 
 
-  const handleDelete = async (e,taskId) => {
-    e. preventDefault(); // Prevent the Link navigation
-    e.stopPropagation(); // Stop the event from bubbling up
-    await dispatch(deleteATaskThunk(taskId));
-    await dispatch(setAllTasksThunk())
+  // const handleDelete = async (e,taskId) => {
+  //   e. preventDefault(); // Prevent the Link navigation
+  //   e.stopPropagation(); // Stop the event from bubbling up
+  //   await dispatch(deleteATaskThunk(taskId));
+  //   await dispatch(setAllTasksThunk())
+  // };
+
+ //-------------delete section--------------
+
+  const handleDelete = (taskId) => {
+    setTaskToDelete(taskId);
+    setShowModal(true);
   };
+
+  const handleConfirmDelete = () => {
+    if (taskToDelete) {
+      dispatch(deleteATaskThunk(taskToDelete)); 
+      dispatch(setAllTasksThunk());
+      setShowModal(false);  
+    }
+  };
+
+  const handleCancelDelete = () => {
+    setShowModal(false);  
+  };
+
+  //-------------delete section-----------------
 
   if (!sessionUser) {
     return <div>Please log in to view tasks</div>;
   }
 
+
+
   return (
+  <div className = " side-bar-wrapper">
+    <Sidebar />
     <div className="tasks-page">
       <h1>TASKS</h1>
+
       <div className="debug-section">
         <p>Current User ID: {sessionUser.id}</p>
         <p>Total Tasks in Store: {Object.keys(tasksObj).length}</p>
         <p>Filtered Tasks: {tasks.length}</p>
       </div>
+
       <div className="tasks-grid">
         {tasks && tasks.length > 0 ? (
           tasks.map((task, i) => (
@@ -82,6 +116,7 @@ export const ViewAllTasks = () => {
                   <h3>{task.name}</h3>
                   <p>{task.description}</p>
                 </Link>
+
                 <div className="card-footer">
                   <div className="task-date">
                     Created: {formatDate(task.created_at)}
@@ -95,13 +130,15 @@ export const ViewAllTasks = () => {
                     </button>
                     <button
                       className="delete-btn"
-                      onClick={(e) => handleDelete(e, task.id)}
+                      onClick={() => handleDelete(task.id)}
                     >
                       DELETE
                     </button>
                   </div>
                 </div>
+
               </div>
+              
             </div>
           ))
         ) : (
@@ -109,5 +146,15 @@ export const ViewAllTasks = () => {
         )}
       </div>
     </div>
+    
+    <DeleteConfirmationModal 
+        show={showModal} 
+        onConfirm={handleConfirmDelete} 
+        onCancel={handleCancelDelete} 
+      />
+  </div>
+
+
+  
   );
 };
