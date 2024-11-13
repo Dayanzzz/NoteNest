@@ -40,6 +40,8 @@ const Tags = ({ noteId }) => {
     loadTagsAndNotes();
   }, [dispatch, noteId, isAuthenticated]);
 
+  
+
   const handleAddTag = async () => {
     if (newTagName.trim()) {
       const newTag = await dispatch(createTagThunk(newTagName)); // Create the tag
@@ -53,6 +55,12 @@ const Tags = ({ noteId }) => {
       setNewTagName(''); // Clear input after creation
     }
   };
+
+
+
+
+
+
 
   const handleAssignTagToNote = async (tagId) => {
     if (noteId) {
@@ -377,4 +385,3 @@ export default Tags;
 // };
 
 // export default Tags;
-

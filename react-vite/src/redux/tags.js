@@ -271,4 +271,3 @@ const tagsReducer = (state = initialState, action) => {
 };
 
 export default tagsReducer;
-
