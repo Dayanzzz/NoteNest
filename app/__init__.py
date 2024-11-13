@@ -12,6 +12,7 @@ from .api.task_routes import task_routes
 from .api.tags_routes import tag_routes
 from .api.notebook_routes import notebook_routes
 
+
 from .seeds import seed_commands
 from .config import Config
 
@@ -38,6 +39,8 @@ app.register_blueprint(note_routes, url_prefix='/api/notes')
 app.register_blueprint(task_routes, url_prefix='/api/tasks')
 
 app.register_blueprint(tag_routes,url_prefix='/api/tags')
+ 
+
 db.init_app(app)
 Migrate(app, db)
 
