@@ -52,10 +52,9 @@ export const router = createBrowserRouter([
       
       // }
       {
-        path: "tags", // <-- Define the route with noteId parameter
-        element: <Tags />,            // <-- Render Tags component on this route
+        path: "tags", 
+        element: <Tags />,     
       },
-      
       {
         path:"tasks/",
         element: <ViewAllTasks />
