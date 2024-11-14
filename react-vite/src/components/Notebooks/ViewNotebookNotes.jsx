@@ -18,6 +18,7 @@ function NotesPage() {
 
   const thisNotebook = notebooks.find((notebook) => notebook.id == notebookId);
   const theseNotes = notes.filter((note) => note.notebook_id == notebookId);
+  //theseNotes.length;
 
   useEffect(() => {
     dispatch(thunkFetchNotes());
